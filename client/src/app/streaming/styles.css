@@ -1,0 +1,298 @@
+body {
+    background-color: #f0ede4;
+}
+
+.streaming-container {
+    max-width: 600px;
+    margin: 0 auto;
+    /* background: #ffffff; */
+    /* border-radius: 16px; */
+    /* box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); */
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow: hidden;
+    background-color: #f0ede4;
+    /* padding: 20px; */
+}
+
+.product-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+#transcript_summary {
+    display: none;
+}
+
+.product-header {
+    border-radius: 0.5rem;
+    background: #fffdf3;
+    box-shadow: 0px 0px 8.6px -5px rgba(0, 0, 0, 0.25);
+}
+.product-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    color: #000;
+    font-family: var(--font-inter);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.product-visual {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.product-image {
+    flex-shrink: 0;
+}
+
+.product-image img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    transition: transform 0.2s ease;
+}
+
+.product-image img:hover {
+    transform: scale(1.02);
+}
+.highlighted-grade {
+    scale: 1.25;
+}
+
+.nutri-score-card {
+    background: #ffffff;
+    border: 2px solid #ca4131;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(202, 65, 49, 0.1);
+    min-width: 200px;
+    text-align: center;
+    margin-top: 40px;
+}
+.nutri-score-label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.nutri-score-grades {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin: 8px 0;
+}
+
+.grade {
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 12px;
+    color: white;
+    transition: transform 0.2s ease;
+}
+
+.grade:hover {
+    transform: translateY(-1px);
+}
+
+.grade-a {
+    background-color: #3e7335;
+}
+.grade-b {
+    background-color: #d56328;
+}
+.grade-c {
+    background-color: #fec33a;
+}
+.grade-d {
+    background-color: #d86527;
+}
+.grade-e {
+    background-color: #ca4131;
+}
+
+.critical-warning {
+    color: #ca4131;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 8px;
+}
+.recommendation-section {
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.recommendation-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #000;
+    margin-bottom: 4px;
+}
+
+.recommendation-highlight {
+    color: #ca4131;
+    font-weight: bold;
+}
+
+.reasons-section {
+    padding: 2cap;
+    border-radius: 0.5rem;
+    background: #fffdf3;
+
+    box-shadow: 0px 1px 14px -5px rgba(0, 0, 0, 0.25);
+}
+
+.reasons-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 16px;
+}
+
+.reason-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reason-item:hover {
+    transform: translateX(2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.reason-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.reason-text {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #000;
+}
+
+.nutrition-facts {
+    /* background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
+    overflow: hidden;
+}
+
+.nutrition-header {
+    background: #f8f9fa;
+    color: #000;
+    padding: 16px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.nutrition-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: #fff;
+    transition: background-color 0.2s ease;
+    margin-top: 2px;
+    padding: 15px;
+    /* border-radius: 0.5rem; */
+}
+
+.nutrition-row:hover {
+    background-color: #f8f9fa;
+}
+
+.nutrition-row:last-child {
+    border-bottom: none;
+}
+
+.nutrition-label {
+    font-weight: bold;
+    color: #000;
+    font-size: 14px;
+}
+
+.nutrition-value {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.value-high {
+    color: #f44336;
+}
+.value-medium {
+    color: #ff9800;
+}
+.value-good {
+    color: #4caf50;
+}
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        border-radius: 12px;
+    }
+
+    .product-header {
+        padding: 20px 16px;
+    }
+
+    .product-title {
+        font-size: 18px;
+    }
+
+    .product-visual {
+        gap: 10px;
+    }
+
+    .product-image img {
+        width: 100%;
+        max-width: 280px;
+        height: 180px;
+        padding: 10px;
+    }
+
+    .nutri-score-card {
+        min-width: auto;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .nutrition-row {
+        padding: 20px 16px;
+    }
+
+    .nutrition-header {
+        padding: 12px 16px;
+    }
+}
+
+.product-visual-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40px;
+}

@@ -1,0 +1,64 @@
+services:
+    mongo:
+        image: mongo:7
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongo-data:/data/db
+        networks:
+            - app-network
+
+    backend:
+        build:
+            context: .
+            dockerfile: Dockerfile.backend
+        ports:
+            - "8080:8080"
+        volumes:
+            - type: bind
+              source: ./server
+              target: /app
+              consistency: cached
+            - /app/tmp
+        env_file:
+            - server/.env
+        environment:
+            - CGO_ENABLED=0
+            - NODE_ENV=development
+        depends_on:
+            - mongo
+        stdin_open: true
+        tty: true
+        working_dir: /app
+        networks:
+            - app-network
+
+    # frontend:
+    #   build:
+    #     context: .
+    #     dockerfile: Dockerfile.frontend
+    #   ports:
+    #     - "3000:3000"
+    #   volumes:
+    #     - type: bind
+    #       source: ./client
+    #       target: /app
+    #       consistency: cached
+    #     - /app/node_modules
+    #     - /app/.next
+    #   environment:
+    #     - NODE_ENV=development
+    #     - NEXT_PUBLIC_API_URL=http://backend:8080
+    #   stdin_open: true
+    #   tty: true
+    #   depends_on:
+    #     - backend
+    #   networks:
+    #     - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    mongo-data:

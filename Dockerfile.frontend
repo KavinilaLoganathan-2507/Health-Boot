@@ -1,0 +1,25 @@
+FROM node:20-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install yarn if not included in the base image
+RUN apk add --no-cache yarn
+
+# Copy package.json and yarn.lock
+COPY client/package.json client/yarn.lock ./
+
+# Install dependencies
+RUN yarn install
+
+# Copy the rest of the application
+COPY client/ ./
+
+# Build the Next.js application for production
+RUN yarn build
+
+# Expose the port Next.js runs on
+EXPOSE 3000
+
+# Start the application
+CMD ["yarn", "dev"]
