@@ -19,6 +19,7 @@ func GetGeminiClient() (*genai.Client, error) {
 		return nil, fmt.Errorf("failed to create Gemini client: %v", err)
 	}
 	return client, nil
+	
 }
 
 const GEMINI_MODEL = "gemini-2.5-flash-lite"
