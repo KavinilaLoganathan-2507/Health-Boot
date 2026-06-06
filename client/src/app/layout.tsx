@@ -32,16 +32,34 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable}  ${inter.variable} antialiased`}
-        suppressHydrationWarning={true}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
+        suppressHydrationWarning
       >
         <Link
           href="/chat"
-          className="fixed bottom-5 right-5 z-50 rounded-full bg-[#004743] px-4 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#003731]"
+          className="
+            fixed
+            bottom-4 right-4
+            md:bottom-6 md:right-6
+            z-50
+            rounded-full
+            bg-[#004743]
+            px-4 py-3
+            md:px-5 md:py-4
+            text-sm md:text-base
+            font-semibold
+            text-white
+            shadow-lg
+            hover:bg-[#003731]
+            transition-colors
+          "
         >
           Chat with NutriScan
         </Link>
-        <main className="min-h-screen max-w-[450px] mx-auto">{children}</main>
+
+        <main className="min-h-screen w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {children}
+        </main>
       </body>
     </html>
   );
