@@ -180,6 +180,38 @@ func UpdateNutritionalStatus(userID string, nutritionalElements []string) error 
 	return nil
 }
 
+// UpdateUserProfile updates basic user details
+func UpdateUserProfile(userID string, updateData models.UpdateUserRequest) error {
+	collection := lib.DB.Database("amobagan").Collection("users")
+	
+	objectID, err := primitive.ObjectIDFromHex(userID)
+	if err != nil {
+		return fmt.Errorf("invalid user ID: %v", err)
+	}
+	
+	updateOperations := bson.M{
+		"fullName":        updateData.FullName,
+		"age":             updateData.Age,
+		"height":          updateData.Height,
+		"weight":          updateData.Weight,
+		"workOutsPerWeek": updateData.WorkOutsPerWeek,
+		"healthStatus":    updateData.HealthStatus,
+	}
+	
+	result, err := collection.UpdateOne(
+		context.Background(),
+		bson.M{"_id": objectID},
+		bson.M{"$set": updateOperations},
+	)
+	
+	if err != nil {
+		return fmt.Errorf("failed to update user profile: %v", err)
+	}
+	
+	log.Printf("Update Profile result - Matched: %d, Modified: %d", result.MatchedCount, result.ModifiedCount)
+	return nil
+}
+
 // createBasicUserProfile creates a basic user profile with default values
 func createBasicUserProfile(userID string, objectID primitive.ObjectID) (*models.User, error) {
 	log.Printf("Creating basic user profile for ID: %s", userID)

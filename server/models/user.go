@@ -24,3 +24,13 @@ type User struct {
 type NutritionalUpdateRequest struct {
 	NutritionalElements []string `json:"nutritionalElements" binding:"required"`
 }
+
+// UpdateUserRequest represents the request to update user profile
+type UpdateUserRequest struct {
+	FullName        string `json:"fullName" binding:"required"`
+	Age             string `json:"age"`
+	Height          string `json:"height"`
+	Weight          string `json:"weight"`
+	WorkOutsPerWeek string `json:"workOutsPerWeek"`
+	HealthStatus    string `json:"healthStatus"`
+}

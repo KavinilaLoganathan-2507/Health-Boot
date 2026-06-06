@@ -213,6 +213,40 @@ func (u *UserController) UpdateNutritionalStatus(c *gin.Context) {
 	utils.OK(c, "Nutritional status updated successfully", response)
 }
 
+func (u *UserController) UpdateUser(c *gin.Context) {
+	userID := c.GetString("userID")
+	if userID == "" {
+		utils.BadRequest(c, "User not authenticated", nil)
+		return
+	}
+	
+	var request models.UpdateUserRequest
+	if err := c.ShouldBindJSON(&request); err != nil {
+		utils.BadRequest(c, "Invalid request body", err.Error())
+		return
+	}
+	
+	err := services.UpdateUserProfile(userID, request)
+	if err != nil {
+		utils.InternalServerError(c, "Failed to update user profile", err.Error())
+		return
+	}
+	
+	// Get updated user data
+	user, err := services.GetUserByID(userID)
+	if err != nil {
+		utils.InternalServerError(c, "Failed to get updated user data", err.Error())
+		return
+	}
+	
+	response := map[string]interface{}{
+		"message": "User profile updated successfully",
+		"updatedProfile": user,
+	}
+	
+	utils.OK(c, "User profile updated successfully", response)
+}
+
 func (u *UserController) GetNutritionDetails(c *gin.Context) {
 	userID := c.GetString("userID")
 	if userID == "" {
