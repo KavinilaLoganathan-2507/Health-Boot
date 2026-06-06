@@ -23,6 +23,9 @@ import { SERVER_URL } from '@/lib/constants';
 
 export default function LoginPage() {
     const router = useRouter();
+    const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+    const redirectUrl = searchParams?.get('redirect') || '/dashboard';
+
     const [formData, setFormData] = useState({
         phoneNo: "",
         password: "",
@@ -34,6 +37,18 @@ export default function LoginPage() {
         e.preventDefault();
         setIsLoading(true);
         setError("");
+
+        if (formData.phoneNo.length !== 10) {
+            setError("Phone number must be exactly 10 digits.");
+            setIsLoading(false);
+            return;
+        }
+        
+        if (formData.password.length < 6) {
+            setError("Password must be at least 6 characters.");
+            setIsLoading(false);
+            return;
+        }
 
         try {
             const response = await fetch(`${SERVER_URL}/api/user/login`, {
@@ -67,20 +82,13 @@ export default function LoginPage() {
                     }; max-age=${60 * 60 * 24 * 7}; path=/`;
                 }
 
-                // Log to verify cookie setting
-                console.log("Cookies after setting:", {
-                    authTokenCookie:
-                        document.cookie.match(/authToken=([^;]*)/)?.[1],
-                    userNameCookie:
-                        document.cookie.match(/userName=([^;]*)/)?.[1],
-                });
-
-                // Navigate to the scan page (or wherever you want to redirect after login)
+                // Navigate back to the redirect url or dashboard
                 setTimeout(() => {
-                    router.push("/scan");
+                    router.push(redirectUrl);
                 }, 1000);
             } else {
-                setError(data.message || "Login failed. Please try again.");
+                const errorMessage = data.error?.message || data.message || "Login failed. Please try again.";
+                setError(errorMessage);
             }
         } catch (err) {
             console.error("Login error:", err);
@@ -202,7 +210,7 @@ export default function LoginPage() {
                                 <p className="text-gray-600">
                                     Don&apos;t have an account?{" "}
                                     <a
-                                        href="/onboarding/carousel"
+                                        href={`/signup?redirect=${encodeURIComponent(redirectUrl)}`}
                                         className="text-[#004743] hover:text-[#003331] font-medium"
                                     >
                                         Sign up here
