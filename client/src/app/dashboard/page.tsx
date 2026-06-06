@@ -37,14 +37,12 @@ export default function DashboardPage() {
         const result = await response.json();
         
         if (response.ok && result.data && result.data.length > 0) {
-          // Get the last 7 entries
           const recentHistory = result.data.slice(-7);
           
           const mappedData = recentHistory.map((record: any) => {
             const date = new Date(record.createdAt);
             const dayStr = date.toLocaleDateString("en-US", { weekday: "short" });
             
-            // Derive a simple health score (0-100) from risk
             let score = 50;
             if (record.analysis.riskScore === "Low Risk") score = 90;
             else if (record.analysis.riskScore === "Medium Risk") score = 65;
@@ -53,14 +51,12 @@ export default function DashboardPage() {
             return { day: dayStr, score: score };
           });
 
-          // Pad with empty days if less than 7
           while (mappedData.length < 7) {
             mappedData.unshift({ day: "-", score: 0 });
           }
 
           setHistoryData(mappedData);
 
-          // Fallback initialization if local storage doesn't have the latest scan
           const latestLocal = localStorage.getItem("latestBiometricAnalysis");
           if (!latestLocal) {
             const mostRecentRecord = result.data[result.data.length - 1];
@@ -73,7 +69,6 @@ export default function DashboardPage() {
             }
           }
         } else {
-          // Default mock data if no history
           setHistoryData([
             { day: "Mon", score: 65 },
             { day: "Tue", score: 72 },
@@ -86,7 +81,6 @@ export default function DashboardPage() {
         }
       } catch (err) {
         console.error("Failed to fetch history:", err);
-        // Default mock data on error
         setHistoryData([
           { day: "Mon", score: 65 },
           { day: "Tue", score: 72 },
@@ -102,58 +96,65 @@ export default function DashboardPage() {
     fetchHistory();
   }, []);
 
-  // Risk styling dictionary for cinematic glow effects
+  // Soft, high-contrast light alerts that match the white-card design framework
   const riskStyles = {
     "High Risk": {
-      card: "bg-red-950/40 border border-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.25)] text-red-200",
-      title: "text-red-400 font-semibold",
-      value: "text-red-400 font-bold drop-shadow-[0_0_6px_rgba(239,68,68,0.6)]",
-      desc: "text-red-300/60",
-      reason: "text-red-300/80 italic font-mono",
-      icon: "h-5 w-5 text-red-500 animate-pulse"
+      card: "bg-red-50 border border-red-200 shadow-sm text-red-950",
+      title: "text-red-800 font-bold",
+      value: "text-red-600 font-extrabold",
+      desc: "text-red-700/80",
+      reason: "text-red-900 bg-red-100/60 border border-red-200/60 italic font-mono",
+      icon: "h-5 w-5 text-red-600 animate-pulse"
     },
     "Medium Risk": {
-      card: "bg-yellow-950/40 border border-yellow-500/30 shadow-[0_0_15px_rgba(234,179,8,0.25)] text-yellow-200",
-      title: "text-yellow-400 font-semibold",
-      value: "text-yellow-400 font-bold drop-shadow-[0_0_6px_rgba(234,179,8,0.6)]",
-      desc: "text-yellow-300/60",
-      reason: "text-yellow-300/80 italic font-mono",
-      icon: "h-5 w-5 text-yellow-500"
+      card: "bg-amber-50 border border-amber-200 shadow-sm text-amber-950",
+      title: "text-amber-800 font-bold",
+      value: "text-amber-600 font-extrabold",
+      desc: "text-amber-700/80",
+      reason: "text-amber-900 bg-amber-100/60 border border-amber-200/60 italic font-mono",
+      icon: "h-5 w-5 text-amber-600"
     },
     "Low Risk": {
-      card: "bg-green-950/40 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.25)] text-green-200",
-      title: "text-green-400 font-semibold",
-      value: "text-green-400 font-bold drop-shadow-[0_0_6px_rgba(34,197,94,0.6)]",
-      desc: "text-green-300/60",
-      reason: "text-green-300/80 italic font-mono",
-      icon: "h-5 w-5 text-green-500"
+      card: "bg-emerald-50 border border-emerald-200 shadow-sm text-emerald-950",
+      title: "text-emerald-800 font-bold",
+      value: "text-emerald-600 font-extrabold",
+      desc: "text-emerald-700/80",
+      reason: "text-emerald-900 bg-emerald-100/60 border border-emerald-200/60 italic font-mono",
+      icon: "h-5 w-5 text-emerald-600"
     }
   };
   const currentRisk = (analysis?.riskScore || "Low Risk") as "Low Risk" | "Medium Risk" | "High Risk";
   const styles = riskStyles[currentRisk] || riskStyles["Low Risk"];
 
+  // Light theme matching styles (Based directly on your screenshots)
+  const cardLightStyle = "bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_4px_25px_rgba(0,0,0,0.04)]";
+  const cardTitleStyle = "text-sm font-semibold text-slate-500 tracking-wide";
+  const cardValueStyle = "text-2xl font-bold text-[#0f172a] tracking-tight";
+  const cardSubStatusStyle = "text-xs font-semibold mt-1";
+  const cardReasonStyle = "text-xs text-slate-400 mt-1 italic leading-relaxed";
+
   return (
-    <div className="min-h-screen bg-slate-900 p-6 transition-colors duration-500">
+    <div className="min-h-screen bg-[#f4f6f9] p-6 transition-colors duration-500">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-4xl font-bold text-white tracking-tight">Student Dashboard</h1>
-            <p className="text-slate-300 text-lg mt-2 font-light">Welcome back, {userName}. Here is your Health Report.</p>
+            <h1 className="text-4xl font-bold text-[#0f172a] tracking-tight">Student Dashboard</h1>
+            <p className="text-slate-500 text-lg mt-2 font-light">Welcome back, <span className="text-blue-600 font-normal">{userName}</span>. Here is your Health Report.</p>
           </div>
           <div className="flex items-center space-x-4">
             <button 
               onClick={() => window.location.href = '/scan'}
-              className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-cyan-500 hover:shadow-cyan-glow hover:scale-[1.02] active:scale-[0.98] px-5 py-2.5 rounded-lg text-white font-medium transition-all duration-300 cursor-pointer"
+              className="flex items-center space-x-2 bg-[#0f172a] hover:bg-slate-800 active:scale-[0.98] px-5 py-2.5 rounded-lg text-white font-medium transition-all duration-300 cursor-pointer shadow-sm"
             >
               <Activity className="w-5 h-5" />
               <span className="hidden sm:inline-block">New Scan</span>
             </button>
             <button 
               onClick={() => window.location.href = '/profile'}
-              className="flex items-center space-x-2 bg-slate-800 border border-slate-700 px-4 py-2.5 rounded-lg text-white hover:bg-slate-700 transition-all cursor-pointer"
+              className="flex items-center space-x-2 bg-white border border-slate-200 px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-sm"
             >
-              <div className="w-8 h-8 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold">
+              <div className="w-8 h-8 rounded-full bg-slate-100 text-[#0f172a] flex items-center justify-center font-bold border border-slate-200">
                 {userName ? userName.charAt(0).toUpperCase() : 'U'}
               </div>
               <span className="font-medium hidden sm:inline-block">Profile</span>
@@ -164,124 +165,124 @@ export default function DashboardPage() {
         {/* Biometrics Summary */}
         {biometrics ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="bg-white border-0 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
+            <Card className={cardLightStyle}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-semibold text-slate-500">BMI & Status</CardTitle>
-                <Activity className="h-4 w-4 text-slate-950" />
+                <CardTitle className={cardTitleStyle}>BMI & Status</CardTitle>
+                <Activity className="h-4 w-4 text-blue-600" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-slate-900">{analysis?.bmi || "N/A"}</div>
-                <p className="text-xs font-semibold text-slate-600 mt-1">{analysis?.bmiClassification || "Optimal"}</p>
-                <p className="text-xs text-slate-400 mt-1 italic">{analysis?.bmiReason || ""}</p>
+                <div className={cardValueStyle}>{analysis?.bmi || "N/A"}</div>
+                <p className={`${cardSubStatusStyle} text-blue-600`}>{analysis?.bmiClassification || "Optimal"}</p>
+                <p className={cardReasonStyle}>{analysis?.bmiReason || ""}</p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-0 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
+            <Card className={cardLightStyle}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-semibold text-slate-500">Heart Rate</CardTitle>
+                <CardTitle className={cardTitleStyle}>Heart Rate</CardTitle>
                 <Activity className="h-4 w-4 text-red-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-slate-900">{biometrics.heartRate} bpm</div>
-                <p className="text-xs font-semibold text-slate-600 mt-1">{analysis?.heartRateClassification || "Normal"}</p>
-                <p className="text-xs text-slate-400 mt-1 italic">{analysis?.heartRateReason || ""}</p>
+                <div className={cardValueStyle}>{biometrics.heartRate} <span className="text-xs text-slate-400 font-normal">bpm</span></div>
+                <p className={`${cardSubStatusStyle} text-red-500`}>{analysis?.heartRateClassification || "Normal"}</p>
+                <p className={cardReasonStyle}>{analysis?.heartRateReason || ""}</p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-0 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
+            <Card className={cardLightStyle}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-semibold text-slate-500">Blood Pressure</CardTitle>
-                <Activity className={`h-4 w-4 ${analysis?.bloodPressureClassification === 'Invalid Reading' ? 'text-yellow-500' : 'text-blue-500'}`} />
+                <CardTitle className={cardTitleStyle}>Blood Pressure</CardTitle>
+                <Activity className={`h-4 w-4 ${analysis?.bloodPressureClassification === 'Invalid Reading' ? 'text-amber-500' : 'text-indigo-500'}`} />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-slate-900">{biometrics.systolicBP}/{biometrics.diastolicBP} <span className="text-xs text-slate-400 font-normal">mmHg</span></div>
-                <p className={`text-xs font-semibold mt-1 ${analysis?.bloodPressureClassification === 'Invalid Reading' ? 'text-yellow-600' : 'text-slate-600'}`}>
+                <div className={cardValueStyle}>{biometrics.systolicBP}/{biometrics.diastolicBP} <span className="text-xs text-slate-400 font-normal">mmHg</span></div>
+                <p className={`${cardSubStatusStyle} ${analysis?.bloodPressureClassification === 'Invalid Reading' ? 'text-amber-600' : 'text-indigo-600'}`}>
                   {analysis?.bloodPressureClassification || "Status"}
                 </p>
-                <p className="text-xs text-slate-400 mt-1 italic">{analysis?.bloodPressureReason || ""}</p>
+                <p className={cardReasonStyle}>{analysis?.bloodPressureReason || ""}</p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-0 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
+            <Card className={cardLightStyle}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-semibold text-slate-500">Hydration Level</CardTitle>
-                <Droplets className="h-4 w-4 text-blue-400" />
+                <CardTitle className={cardTitleStyle}>Hydration Level</CardTitle>
+                <Droplets className="h-4 w-4 text-sky-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-slate-900">{biometrics.water}%</div>
-                <p className="text-xs font-semibold text-slate-600 mt-1">{analysis?.hydrationStatus || "Optimal"}</p>
-                <p className="text-xs text-slate-400 mt-1 italic">{analysis?.hydrationReason || ""}</p>
+                <div className={cardValueStyle}>{biometrics.water}%</div>
+                <p className={`${cardSubStatusStyle} text-sky-600`}>{analysis?.hydrationStatus || "Optimal"}</p>
+                <p className={cardReasonStyle}>{analysis?.hydrationReason || ""}</p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-0 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
+            <Card className={cardLightStyle}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-semibold text-slate-500">Body Fat</CardTitle>
+                <CardTitle className={cardTitleStyle}>Body Fat</CardTitle>
                 <Activity className="h-4 w-4 text-orange-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-slate-900">{biometrics.bodyFat}%</div>
-                <p className="text-xs font-semibold text-slate-600 mt-1">{analysis?.bodyFatClassification || "Healthy"}</p>
-                <p className="text-xs text-slate-400 mt-1 italic">{analysis?.bodyFatReason || ""}</p>
+                <div className={cardValueStyle}>{biometrics.bodyFat}%</div>
+                <p className={`${cardSubStatusStyle} text-orange-600`}>{analysis?.bodyFatClassification || "Healthy"}</p>
+                <p className={cardReasonStyle}>{analysis?.bodyFatReason || ""}</p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-0 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
+            <Card className={cardLightStyle}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-semibold text-slate-500">BMR</CardTitle>
+                <CardTitle className={cardTitleStyle}>BMR</CardTitle>
                 <Activity className="h-4 w-4 text-purple-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-slate-900">{analysis?.bmr || "N/A"}</div>
-                <p className="text-xs text-slate-500 mt-1">Resting Calories</p>
-                <p className="text-xs text-slate-400 mt-1 italic">{analysis?.bmrReason || ""}</p>
+                <div className={cardValueStyle}>{analysis?.bmr || "N/A"}</div>
+                <p className="text-xs font-semibold text-purple-600 mt-1">Resting Calories</p>
+                <p className={cardReasonStyle}>{analysis?.bmrReason || ""}</p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-0 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
+            <Card className={cardLightStyle}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-semibold text-slate-500">Daily Calorie Need</CardTitle>
-                <Utensils className="h-4 w-4 text-orange-500" />
+                <CardTitle className={cardTitleStyle}>Daily Calorie Need</CardTitle>
+                <Utensils className="h-4 w-4 text-amber-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-slate-900">{analysis?.dailyCalorieRequirement || "N/A"}</div>
-                <p className="text-xs text-slate-500 mt-1">Based on Activity</p>
-                <p className="text-xs text-slate-400 mt-1 italic">{analysis?.dailyCalorieReason || ""}</p>
+                <div className={cardValueStyle}>{analysis?.dailyCalorieRequirement || "N/A"}</div>
+                <p className="text-xs font-semibold text-amber-600 mt-1">Based on Activity</p>
+                <p className={cardReasonStyle}>{analysis?.dailyCalorieReason || ""}</p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-0 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
+            <Card className={cardLightStyle}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-semibold text-slate-500">Ideal Weight</CardTitle>
-                <Target className="h-4 w-4 text-green-500" />
+                <CardTitle className={cardTitleStyle}>Ideal Weight</CardTitle>
+                <Target className="h-4 w-4 text-emerald-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-xl font-bold text-slate-900">{analysis?.idealWeightRange || "N/A"}</div>
-                <p className="text-xs text-slate-500 mt-1">Healthy BMI Range</p>
-                <p className="text-xs text-slate-400 mt-1 italic">{analysis?.idealWeightReason || ""}</p>
+                <div className="text-xl font-bold text-[#0f172a] tracking-tight">{analysis?.idealWeightRange || "N/A"}</div>
+                <p className="text-xs font-semibold text-emerald-600 mt-1">Healthy BMI Range</p>
+                <p className={cardReasonStyle}>{analysis?.idealWeightReason || ""}</p>
               </CardContent>
             </Card>
 
-            {/* Inverted Glowing Overall Risk Score Card */}
-            <Card className={`md:col-span-2 lg:col-span-4 border-0 transition-all duration-500 ${styles.card}`}>
+            {/* High Contrast Light Overall Risk Score Card */}
+            <Card className={`md:col-span-2 lg:col-span-4 rounded-xl shadow-sm transition-all duration-500 ${styles.card}`}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className={`text-sm font-bold uppercase tracking-wider ${styles.title}`}>Overall Risk Score</CardTitle>
+                <CardTitle className={`text-sm uppercase tracking-wider ${styles.title}`}>Overall Risk Score</CardTitle>
                 <AlertCircle className={styles.icon} />
               </CardHeader>
               <CardContent>
                 <div className={`text-3xl ${styles.value}`}>{analysis?.riskScore || "Low Risk"}</div>
                 <p className={`text-xs mt-1 ${styles.desc}`}>Calculated based on BMI + Heart Rate + Blood Pressure + Hydration + Body Fat metrics</p>
-                <p className={`text-xs mt-3 font-mono p-3 bg-slate-950/50 rounded-lg ${styles.reason}`}>
-                  Formula Breakdown: {analysis?.riskScoreReason || "No active risks detected."}
+                <p className={`text-xs mt-3 p-3 rounded-lg border ${styles.reason}`}>
+                  <strong>Formula Breakdown:</strong> {analysis?.riskScoreReason || "No active risks detected."}
                 </p>
               </CardContent>
             </Card>
           </div>
         ) : (
-          <Card className="bg-yellow-950/20 border border-yellow-800/40 text-yellow-200 shadow-md">
+          <Card className="bg-amber-50 border border-amber-200 text-amber-900 shadow-sm rounded-xl">
             <CardContent className="p-6 flex items-center space-x-4">
-              <AlertCircle className="h-6 w-6 text-yellow-500" />
-              <p className="text-yellow-100">No biometric data found. Please visit the Health Boot Booth (Scan page) to log your data.</p>
+              <AlertCircle className="h-6 w-6 text-amber-600" />
+              <p>No biometric data found. Please visit the Health Boot Booth (Scan page) to log your data.</p>
             </CardContent>
           </Card>
         )}
@@ -289,24 +290,24 @@ export default function DashboardPage() {
         {/* Recommendations & Meal Plan */}
         {analysis && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
-            <Card className="bg-white border-0 shadow-md">
+            <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
               <CardHeader>
                 <div className="flex items-center space-x-2">
-                  <Activity className="h-5 w-5 text-slate-900" />
-                  <CardTitle className="text-slate-900">Daily Progress Overview</CardTitle>
+                  <Activity className="h-5 w-5 text-[#0f172a]" />
+                  <CardTitle className="text-[#0f172a]">Daily Progress Overview</CardTitle>
                 </div>
-                <CardDescription className="text-slate-500">Your health score trends over the last 7 days</CardDescription>
+                <CardDescription className="text-slate-400">Your health score trends over the last 7 days</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4 pt-4">
                 <div className="flex items-end justify-between h-40 space-x-2 px-2">
                   {historyData.map((item, index) => (
                     <div key={index} className="flex flex-col items-center flex-1">
-                      <div className="w-full max-w-[40px] flex items-end justify-center h-32 bg-slate-50 rounded-t-md overflow-visible relative group">
+                      <div className="w-full max-w-[40px] flex items-end justify-center h-32 bg-slate-50 border border-slate-100 rounded-t-md overflow-visible relative group">
                         <div 
-                          className="w-full bg-gradient-to-t from-blue-600 to-cyan-500 rounded-t-md transition-all duration-500 ease-out relative group-hover:shadow-cyan-glow group-hover:from-blue-500 group-hover:to-cyan-400"
+                          className="w-full bg-[#0f172a] rounded-t-md transition-all duration-500 ease-out relative group-hover:bg-blue-600"
                           style={{ height: `${item.score}%` }}
                         >
-                          <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none shadow-sm">
+                          <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-[#0f172a] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none shadow-sm">
                             {item.score} pts
                           </div>
                         </div>
@@ -318,13 +319,13 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-0 shadow-md">
+            <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
               <CardHeader>
                 <div className="flex items-center space-x-2">
-                  <Utensils className="h-5 w-5 text-slate-900" />
-                  <CardTitle className="text-slate-900">1-Day Personalized Meal Plan</CardTitle>
+                  <Utensils className="h-5 w-5 text-[#0f172a]" />
+                  <CardTitle className="text-[#0f172a]">1-Day Personalized Meal Plan</CardTitle>
                 </div>
-                <CardDescription className="text-slate-500">Generated by AI based on calories, goals, and preferences</CardDescription>
+                <CardDescription className="text-slate-400">Generated by AI based on calories, goals, and preferences</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="bg-slate-50 border border-slate-100 rounded-lg p-6 shadow-inner overflow-y-auto max-h-[300px]">
@@ -335,13 +336,13 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-0 shadow-md">
+            <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
               <CardHeader>
                 <div className="flex items-center space-x-2">
-                  <Activity className="h-5 w-5 text-slate-900" />
-                  <CardTitle className="text-slate-900">Daily Workout Plan</CardTitle>
+                  <Activity className="h-5 w-5 text-[#0f172a]" />
+                  <CardTitle className="text-[#0f172a]">Daily Workout Plan</CardTitle>
                 </div>
-                <CardDescription className="text-slate-500">Targeted exercises based on BMI, heart rate, and health status</CardDescription>
+                <CardDescription className="text-slate-400">Targeted exercises based on BMI, heart rate, and health status</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="bg-slate-50 border border-slate-100 rounded-lg p-6 shadow-inner overflow-y-auto max-h-[300px]">
