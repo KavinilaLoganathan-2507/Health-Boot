@@ -72,7 +72,7 @@ export default function WelcomePage() {
         
         <div className="relative z-10 transform transition-transform duration-700 hover:scale-105">
           <Image
-            src="https://res.cloudinary.com/dqqyuvg1v/image/upload/v1750553055/Phone_3a_Pro_mockup_silver_portrait_uvzdui.png"
+            src="client/public/Screenshot 2026-06-06 at 8.36.02 PM.png"
             height={500}
             width={250}
             alt="Health Boot App Preview"
