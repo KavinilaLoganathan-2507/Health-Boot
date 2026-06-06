@@ -108,7 +108,7 @@ function StreamingContent() {
         <button
           type="button"
           onClick={() => router.push("/scan")}
-          className="inline-flex items-center gap-2 rounded-full border border-[#004743]/15 bg-white px-4 py-2 text-sm font-medium text-[#004743] shadow-sm transition-colors hover:bg-[#f0ede4]"
+          className="inline-flex items-center gap-2 rounded-full border border-slate-900/15 bg-[#F4F7FB] px-4 py-2 text-sm font-medium text-slate-900 shadow-sm transition-colors hover:bg-[#f0ede4]"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to scan
@@ -129,10 +129,10 @@ function StreamingContent() {
           <div className="flex items-center justify-center min-h-[200px]">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-              <p className="text-lg text-gray-600 font-medium">
+              <p className="text-lg text-slate-700 font-medium">
                 Something is cooking...
               </p>
-              <p className="text-sm text-gray-500 mt-2">
+              <p className="text-sm text-slate-500 mt-2">
                 Analyzing your product&apos;s nutrition information
               </p>
             </div>
@@ -140,25 +140,25 @@ function StreamingContent() {
         )}
         {productPreview && (
           <div className="mx-auto max-w-3xl px-4 pb-4">
-            <div className="rounded-2xl border border-[#004743]/10 bg-[#f0ede4] p-4 shadow-sm">
-              <p className="text-xs uppercase tracking-wide text-[#004743]/70 font-semibold">
+            <div className="rounded-2xl border border-slate-900/10 bg-[#f0ede4] p-4 shadow-sm">
+              <p className="text-xs uppercase tracking-wide text-slate-900/70 font-semibold">
                 Fast product preview
               </p>
-              <h2 className="mt-1 text-xl font-bold text-[#004743]">
+              <h2 className="mt-1 text-xl font-bold text-slate-900">
                 {productPreview?.product_identification?.product_name ||
                   productPreview?.product_identification?.brand ||
                   "Product details"}
               </h2>
               <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
-                <div className="rounded-lg bg-white/80 p-3">
-                  <p className="text-gray-500">Nutri-Score</p>
-                  <p className="font-semibold text-[#004743]">
+                <div className="rounded-lg bg-[#F4F7FB]/80 p-3">
+                  <p className="text-slate-500">Nutri-Score</p>
+                  <p className="font-semibold text-slate-900">
                     {productPreview?.health_scoring?.nutriscore?.grade || "N/A"}
                   </p>
                 </div>
-                <div className="rounded-lg bg-white/80 p-3">
-                  <p className="text-gray-500">Calories</p>
-                  <p className="font-semibold text-[#004743]">
+                <div className="rounded-lg bg-[#F4F7FB]/80 p-3">
+                  <p className="text-slate-500">Calories</p>
+                  <p className="font-semibold text-slate-900">
                     {typeof productPreview?.nutritional_information?.per_100g?.energy_kcal === "number"
                       ? `${productPreview.nutritional_information.per_100g.energy_kcal} kcal`
                       : "N/A"}

@@ -34,7 +34,7 @@ func nutritionFallback(message string) string {
 
 	switch {
 	case strings.Contains(lower, "your name") || strings.Contains(lower, "who are you"):
-		return "I’m NutriScan, your nutrition assistant. I help you read labels, compare foods, and make healthier choices."
+		return "I’m Health Boot, your nutrition assistant. I help you read labels, compare foods, and make healthier choices."
 	case strings.Contains(lower, "apple"):
 		return "Apple: low calorie, high water, and a good source of fiber. A whole apple is better than juice because it keeps the fiber."
 	case strings.Contains(lower, "orange"):
@@ -78,7 +78,7 @@ func (c *ChatController) Chat(cxt *gin.Context) {
 		return
 	}
 
-	systemPrompt := `You are NutriScan, a nutrition expert chatbot.
+	systemPrompt := `You are Health Boot, a nutrition expert chatbot.
 Rules:
 1. Answer like a practical nutrition coach.
 2. Be specific and useful.
