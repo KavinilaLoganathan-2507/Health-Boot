@@ -5,56 +5,56 @@ import { Users, PieChart, TrendingUp, ShieldAlert } from "lucide-react";
 
 export default function AdminDashboardPage() {
   return (
-    <div className="min-h-screen bg-[#F5F3F0] p-6">
+    <div className="min-h-screen bg-slate-50 border-slate-300 p-6">
       <div className="max-w-6xl mx-auto space-y-8">
         <div>
-          <h1 className="text-4xl font-bold text-[#004743]">Admin Analytics & Research</h1>
-          <p className="text-gray-600 text-lg mt-2">Campus wellness population insights and predictive analytics.</p>
+          <h1 className="text-4xl font-bold text-slate-900">Admin Analytics & Research</h1>
+          <p className="text-slate-700 text-lg mt-2">Campus wellness population insights and predictive analytics.</p>
         </div>
 
         {/* Top KPIs */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">Total Scans Today</CardTitle>
+              <CardTitle className="text-sm font-medium text-slate-700">Total Scans Today</CardTitle>
               <Users className="h-4 w-4 text-blue-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-800">1,204</div>
+              <div className="text-2xl font-bold text-slate-900">1,204</div>
               <p className="text-xs text-green-600 mt-1">+12% from yesterday</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">Avg Campus Hydration</CardTitle>
+              <CardTitle className="text-sm font-medium text-slate-700">Avg Campus Hydration</CardTitle>
               <PieChart className="h-4 w-4 text-blue-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-800">58%</div>
+              <div className="text-2xl font-bold text-slate-900">58%</div>
               <p className="text-xs text-yellow-600 mt-1">Below target (60%)</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">Elevated Stress/BP</CardTitle>
+              <CardTitle className="text-sm font-medium text-slate-700">Elevated Stress/BP</CardTitle>
               <TrendingUp className="h-4 w-4 text-red-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-800">14%</div>
+              <div className="text-2xl font-bold text-slate-900">14%</div>
               <p className="text-xs text-red-600 mt-1">Spike around exam period</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">Data Privacy Status</CardTitle>
+              <CardTitle className="text-sm font-medium text-slate-700">Data Privacy Status</CardTitle>
               <ShieldAlert className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-700">Encrypted</div>
-              <p className="text-xs text-gray-500 mt-1">100% records anonymized</p>
+              <p className="text-xs text-slate-500 mt-1">100% records anonymized</p>
             </CardContent>
           </Card>
         </div>

@@ -101,15 +101,15 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#F0EDE4] flex items-center justify-center p-4">
+        <div className="min-h-screen bg-[#F4F7FB] flex items-center justify-center p-4">
             <div className="w-full max-w-md">
-                <Card className="bg-[#F0EDE4]">
+                <Card className="bg-[#F4F7FB]">
                     <CardHeader className="text-center space-y-4">
                         <div>
                             <CardTitle className="text-2xl flex font-bold bg-[#000] bg-clip-text text-transparent">
                                 Welcome Back
                             </CardTitle>
-                            <CardDescription className="text-gray-600 mt-2">
+                            <CardDescription className="text-slate-700 mt-2">
                                 Sign in to your account to continue
                             </CardDescription>
                         </div>
@@ -127,12 +127,12 @@ export default function LoginPage() {
                                 <div>
                                     <Label
                                         htmlFor="phoneNo"
-                                        className="text-black font-medium"
+                                        className="text-slate-900 font-medium"
                                     >
                                         Phone Number *
                                     </Label>
                                     <div className="relative mt-2">
-                                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-500" />
                                         <Input
                                             id="phoneNo"
                                             type="tel"
@@ -144,7 +144,7 @@ export default function LoginPage() {
                                                     phoneNo: e.target.value,
                                                 })
                                             }
-                                            className="pl-10 bg-[#FFFDF7] text-black placeholder:text-gray-500"
+                                            className="pl-10 bg-slate-50 text-slate-900 placeholder:text-slate-500"
                                             placeholder="Enter your phone number"
                                         />
                                     </div>
@@ -153,12 +153,12 @@ export default function LoginPage() {
                                 <div>
                                     <Label
                                         htmlFor="password"
-                                        className="text-black font-medium"
+                                        className="text-slate-900 font-medium"
                                     >
                                         Password *
                                     </Label>
                                     <div className="relative mt-2">
-                                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-500" />
                                         <Input
                                             id="password"
                                             type="password"
@@ -170,7 +170,7 @@ export default function LoginPage() {
                                                     password: e.target.value,
                                                 })
                                             }
-                                            className="pl-10 bg-[#FFFDF7] text-black placeholder:text-gray-500"
+                                            className="pl-10 bg-slate-50 text-slate-900 placeholder:text-slate-500"
                                             placeholder="Enter your password"
                                         />
                                     </div>
@@ -181,15 +181,15 @@ export default function LoginPage() {
                                 <label className="flex items-center space-x-2">
                                     <input
                                         type="checkbox"
-                                        className="rounded border-gray-300 text-[#004743] focus:ring-[#004743]"
+                                        className="rounded border-slate-300 text-slate-900 focus:ring-slate-900"
                                     />
-                                    <span className="text-gray-600">
+                                    <span className="text-slate-700">
                                         Remember me
                                     </span>
                                 </label>
                                 <a
                                     href="#"
-                                    className="text-[#004743] hover:text-[#003331] font-medium"
+                                    className="text-slate-900 hover:text-cyan-500 font-medium"
                                 >
                                     Forgot password?
                                 </a>
@@ -198,7 +198,7 @@ export default function LoginPage() {
                             <Button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full bg-[#004743] text-white font-medium py-3 transition-all duration-300 transform hover:scale-[1.02] mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full bg-slate-900 text-white font-medium py-3 transition-all duration-300 transform hover:scale-[1.02] mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {isLoading ? "Signing In..." : "Sign In"}
                                 {!isLoading && (
@@ -207,11 +207,11 @@ export default function LoginPage() {
                             </Button>
 
                             <div className="text-center mt-6">
-                                <p className="text-gray-600">
+                                <p className="text-slate-700">
                                     Don&apos;t have an account?{" "}
                                     <a
                                         href={`/signup?redirect=${encodeURIComponent(redirectUrl)}`}
-                                        className="text-[#004743] hover:text-[#003331] font-medium"
+                                        className="text-slate-900 hover:text-cyan-500 font-medium"
                                     >
                                         Sign up here
                                     </a>

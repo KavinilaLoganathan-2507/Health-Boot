@@ -80,14 +80,14 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F0EDE4] p-6">
+    <div className="min-h-screen bg-[#F4F7FB] p-6">
       <div className="max-w-3xl mx-auto space-y-8">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-4xl font-bold text-[#004743]">My Profile</h1>
-            <p className="text-gray-600 text-lg mt-2">Manage your personal information and preferences.</p>
+            <h1 className="text-4xl font-bold text-slate-900">My Profile</h1>
+            <p className="text-slate-700 text-lg mt-2">Manage your personal information and preferences.</p>
           </div>
-          <Button onClick={() => router.push("/dashboard")} variant="outline" className="border-[#004743] text-[#004743]">
+          <Button onClick={() => router.push("/dashboard")} variant="outline" className="border-slate-900 text-slate-900">
             Back to Dashboard
           </Button>
         </div>
@@ -95,7 +95,7 @@ export default function ProfilePage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <div className="flex items-center space-x-3">
-              <div className="bg-[#004743] p-3 rounded-full">
+              <div className="bg-slate-900 p-3 rounded-full">
                 <UserIcon className="h-6 w-6 text-white" />
               </div>
               <div>
@@ -119,7 +119,7 @@ export default function ProfilePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {isEditing && (
                 <div className="col-span-1 md:col-span-2">
-                  <p className="text-sm text-gray-500 mb-1">Full Name</p>
+                  <p className="text-sm text-slate-500 mb-1">Full Name</p>
                   <Input 
                     value={formData.fullName} 
                     onChange={(e) => setFormData({...formData, fullName: e.target.value})}
@@ -128,18 +128,18 @@ export default function ProfilePage() {
                 </div>
               )}
 
-              <div className="flex items-center space-x-3 p-3 bg-[#F5F3F0] rounded-lg">
-                <Phone className="h-5 w-5 text-gray-500" />
+              <div className="flex items-center space-x-3 p-3 bg-slate-50 border-slate-300 rounded-lg">
+                <Phone className="h-5 w-5 text-slate-500" />
                 <div className="w-full">
-                  <p className="text-sm text-gray-500">Phone Number</p>
-                  <p className="font-medium text-gray-800">{userData.phoneNo || "Not provided"} <span className="text-xs text-gray-400 ml-2">(Cannot be changed)</span></p>
+                  <p className="text-sm text-slate-500">Phone Number</p>
+                  <p className="font-medium text-slate-900">{userData.phoneNo || "Not provided"} <span className="text-xs text-blue-500 ml-2">(Cannot be changed)</span></p>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-3 p-3 bg-[#F5F3F0] rounded-lg">
-                <Activity className="h-5 w-5 text-gray-500" />
+              <div className="flex items-center space-x-3 p-3 bg-slate-50 border-slate-300 rounded-lg">
+                <Activity className="h-5 w-5 text-slate-500" />
                 <div className="w-full">
-                  <p className="text-sm text-gray-500">Age</p>
+                  <p className="text-sm text-slate-500">Age</p>
                   {isEditing ? (
                     <Input 
                       value={formData.age} 
@@ -148,15 +148,15 @@ export default function ProfilePage() {
                       className="mt-1 h-8"
                     />
                   ) : (
-                    <p className="font-medium text-gray-800">{userData.age || "Not provided"}</p>
+                    <p className="font-medium text-slate-900">{userData.age || "Not provided"}</p>
                   )}
                 </div>
               </div>
 
-              <div className="flex items-center space-x-3 p-3 bg-[#F5F3F0] rounded-lg">
-                <Settings className="h-5 w-5 text-gray-500" />
+              <div className="flex items-center space-x-3 p-3 bg-slate-50 border-slate-300 rounded-lg">
+                <Settings className="h-5 w-5 text-slate-500" />
                 <div className="w-full">
-                  <p className="text-sm text-gray-500">Height (cm)</p>
+                  <p className="text-sm text-slate-500">Height (cm)</p>
                   {isEditing ? (
                     <Input 
                       value={formData.height} 
@@ -165,15 +165,15 @@ export default function ProfilePage() {
                       className="mt-1 h-8"
                     />
                   ) : (
-                    <p className="font-medium text-gray-800">{userData.height ? `${userData.height} cm` : "Not provided"}</p>
+                    <p className="font-medium text-slate-900">{userData.height ? `${userData.height} cm` : "Not provided"}</p>
                   )}
                 </div>
               </div>
 
-              <div className="flex items-center space-x-3 p-3 bg-[#F5F3F0] rounded-lg">
-                <Activity className="h-5 w-5 text-gray-500" />
+              <div className="flex items-center space-x-3 p-3 bg-slate-50 border-slate-300 rounded-lg">
+                <Activity className="h-5 w-5 text-slate-500" />
                 <div className="w-full">
-                  <p className="text-sm text-gray-500">Weight (kg)</p>
+                  <p className="text-sm text-slate-500">Weight (kg)</p>
                   {isEditing ? (
                     <Input 
                       value={formData.weight} 
@@ -182,15 +182,15 @@ export default function ProfilePage() {
                       className="mt-1 h-8"
                     />
                   ) : (
-                    <p className="font-medium text-gray-800">{userData.weight ? `${userData.weight} kg` : "Not provided"}</p>
+                    <p className="font-medium text-slate-900">{userData.weight ? `${userData.weight} kg` : "Not provided"}</p>
                   )}
                 </div>
               </div>
               
-              <div className="flex items-center space-x-3 p-3 bg-[#F5F3F0] rounded-lg">
-                <Activity className="h-5 w-5 text-gray-500" />
+              <div className="flex items-center space-x-3 p-3 bg-slate-50 border-slate-300 rounded-lg">
+                <Activity className="h-5 w-5 text-slate-500" />
                 <div className="w-full">
-                  <p className="text-sm text-gray-500">Workouts Per Week</p>
+                  <p className="text-sm text-slate-500">Workouts Per Week</p>
                   {isEditing ? (
                     <Input 
                       value={formData.workOutsPerWeek} 
@@ -199,15 +199,15 @@ export default function ProfilePage() {
                       className="mt-1 h-8"
                     />
                   ) : (
-                    <p className="font-medium text-gray-800">{userData.workOutsPerWeek || "Not provided"}</p>
+                    <p className="font-medium text-slate-900">{userData.workOutsPerWeek || "Not provided"}</p>
                   )}
                 </div>
               </div>
               
-              <div className="flex items-center space-x-3 p-3 bg-[#F5F3F0] rounded-lg">
-                <Activity className="h-5 w-5 text-gray-500" />
+              <div className="flex items-center space-x-3 p-3 bg-slate-50 border-slate-300 rounded-lg">
+                <Activity className="h-5 w-5 text-slate-500" />
                 <div className="w-full">
-                  <p className="text-sm text-gray-500">Health Status</p>
+                  <p className="text-sm text-slate-500">Health Status</p>
                   {isEditing ? (
                     <Input 
                       value={formData.healthStatus} 
@@ -216,18 +216,18 @@ export default function ProfilePage() {
                       className="mt-1 h-8"
                     />
                   ) : (
-                    <p className="font-medium text-gray-800">{userData.healthStatus || "Not provided"}</p>
+                    <p className="font-medium text-slate-900">{userData.healthStatus || "Not provided"}</p>
                   )}
                 </div>
               </div>
             </div>
 
             {isEditing ? (
-              <div className="pt-6 border-t border-gray-200 flex items-center space-x-4">
+              <div className="pt-6 border-t border-slate-200 flex items-center space-x-4">
                 <Button 
                   onClick={handleSave} 
                   disabled={isLoading}
-                  className="flex items-center bg-[#004743] hover:bg-[#003731] text-white"
+                  className="flex items-center bg-slate-900 hover:bg-cyan-600 text-white"
                 >
                   <Save className="w-4 h-4 mr-2" />
                   {isLoading ? "Saving..." : "Save Changes"}
@@ -246,14 +246,14 @@ export default function ProfilePage() {
                     });
                   }} 
                   variant="outline" 
-                  className="flex items-center text-gray-600"
+                  className="flex items-center text-slate-700"
                 >
                   <X className="w-4 h-4 mr-2" />
                   Cancel
                 </Button>
               </div>
             ) : (
-              <div className="pt-6 border-t border-gray-200">
+              <div className="pt-6 border-t border-slate-200">
                 <Button 
                   onClick={handleLogout} 
                   variant="destructive" 

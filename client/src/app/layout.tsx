@@ -50,8 +50,11 @@ export default function RootLayout({
             font-semibold
             text-white
             shadow-lg
-            hover:bg-cyan-600
-            transition-colors"
+            hover:shadow-cyan-glow
+            hover:scale-[1.05]
+            hover:bg-slate-800
+            transition-all
+            duration-300"
         >
           Chat with Health Boot
         </Link>
@@ -61,7 +64,7 @@ export default function RootLayout({
         </main>
         
         {/* Global Footer */}
-        <footer className="w-full text-center py-4 text-sm text-slate-500 mt-auto bg-[#F4F7FB]">
+        <footer className="w-full text-center py-6 text-xs text-slate-500/60 mt-auto bg-transparent border-t border-slate-200/5">
           Coded by Kavinila and Arunaw Rishe M...
         </footer>
       </body>
