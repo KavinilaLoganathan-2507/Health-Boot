@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@config "../../../tailwind.config.ts";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -42,7 +43,40 @@
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) + 4px);
     --font-inter: var(--font-inter);
+    --animate-heartbeat: heartbeat 1.5s ease-in-out infinite;
+    --shadow-cyan-glow: 0 0 15px rgba(8, 145, 178, 0.4);
+    --shadow-red-glow: 0 0 10px rgba(239, 68, 68, 0.3);
+
+    @keyframes heartbeat {
+        0%, 100% { transform: scale(1); }
+        14% { transform: scale(1.04); }
+        28% { transform: scale(1); }
+        42% { transform: scale(1.04); }
+        70% { transform: scale(1); }
+    }
 }
+
+@utility bg-wave {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%230891b2' fill-opacity='0.03' d='M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,218.7C672,203,768,149,864,138.7C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-size: 1440px 320px;
+    background-position: 0 bottom;
+    animation: wave-move 20s linear infinite;
+}
+
+@utility glass-card {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+}
+
+@keyframes wave-move {
+    from { background-position-x: 0; }
+    to { background-position-x: 1440px; }
+}
+
 
 :root {
     --radius: 0.625rem;

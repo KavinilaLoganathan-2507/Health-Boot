@@ -1,19 +1,19 @@
 "use client";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { useRef } from "react";
 
 export default function LandingPage() {
   const router = useRouter();
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      router.push("/welcome");
-    }, 3000);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-    return () => clearTimeout(timer);
-  }, [router]);
+  const handleClick = () => {
+    // Any click skips the intro
+    router.push("/welcome");
+  };
+
   return (
     <div
+      onClick={handleClick}
       style={{
         minHeight: "100vh",
         display: "flex",
@@ -21,18 +21,18 @@ export default function LandingPage() {
         alignItems: "center",
         margin: 0,
         padding: 0,
+        backgroundColor: "black",
       }}
-      className="bg-[#F0EDE4]"
+      className="relative w-full h-screen overflow-hidden cursor-pointer flex flex-col justify-center items-center"
     >
-      <Image
-        src="https://res.cloudinary.com/dqqyuvg1v/image/upload/v1750537445/ChatGPT_Image_Jun_22_2025_12_34_08_AM_t2mgyn.png"
-        alt="NutriScan Landing"
-        width={500}
-        height={500}
-        priority
-        style={{
-          objectFit: "cover",
-        }}
+      <video
+        ref={videoRef}
+        src="/intro.mp4"
+        autoPlay
+        playsInline
+        preload="auto"
+        onEnded={() => router.push("/welcome")}
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
       />
     </div>
   );
