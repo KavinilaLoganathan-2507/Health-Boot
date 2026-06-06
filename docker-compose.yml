@@ -1,3 +1,4 @@
+name: "arunaw"
 services:
     mongo:
         image: mongo:7

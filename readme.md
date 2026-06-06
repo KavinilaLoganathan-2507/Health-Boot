@@ -1,8 +1,8 @@
-# NutriScan 🥗📱
+# Arunaw (Health Boot) 🥗📱
 
 A personalized nutrition analysis platform that empowers users to make informed food choices through barcode scanning, AI-powered analysis, and personalized health recommendations.
 
-![NutriScan App Screenshots](https://res.cloudinary.com/dqqyuvg1v/image/upload/v1750560345/WhatsApp_Image_2025-06-22_at_06.36.26_y4tgex.jpg)
+![Health Boot App Screenshots](https://res.cloudinary.com/dqqyuvg1v/image/upload/v1750560345/WhatsApp_Image_2025-06-22_at_06.36.26_y4tgex.jpg)
 
 ## 🌟 Features
 
