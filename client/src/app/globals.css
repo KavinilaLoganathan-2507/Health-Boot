@@ -72,6 +72,30 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
 }
 
+@utility nav-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -5px rgba(8, 145, 178, 0.15), 0 0 12px rgba(8, 145, 178, 0.05);
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@utility animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out forwards;
+}
+
 @keyframes wave-move {
     from { background-position-x: 0; }
     to { background-position-x: 1440px; }

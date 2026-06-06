@@ -72,7 +72,7 @@ export default function WelcomePage() {
         
         <div className="relative z-10 transform transition-transform duration-700 hover:scale-105">
           <Image
-            src="client/public/Screenshot 2026-06-06 at 8.36.02 PM.png"
+            src="/app_demo.png"
             height={500}
             width={250}
             alt="Health Boot App Preview"

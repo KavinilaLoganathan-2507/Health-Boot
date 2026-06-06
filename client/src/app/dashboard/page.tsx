@@ -1,14 +1,33 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Activity, Droplets, Target, Utensils, AlertCircle } from "lucide-react";
+import { 
+  Activity, 
+  Droplets, 
+  Target, 
+  Utensils, 
+  AlertCircle, 
+  QrCode, 
+  Sparkles, 
+  ChevronRight, 
+  Apple, 
+  Plus, 
+  TrendingUp 
+} from "lucide-react";
 import { SERVER_URL } from "@/lib/constants";
+import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
+  const router = useRouter();
   const [userName, setUserName] = useState("Student");
   const [biometrics, setBiometrics] = useState<any>(null);
   const [analysis, setAnalysis] = useState<any>(null);
   const [historyData, setHistoryData] = useState<{ day: string, score: number }[]>([]);
+  
+  // Enhancement States
+  const [foodSummary, setFoodSummary] = useState<any>(null);
+  const [activeGoals, setActiveGoals] = useState<any[]>([]);
+  const [insightsSummary, setInsightsSummary] = useState<any>(null);
 
   useEffect(() => {
     const name = localStorage.getItem("userName");
@@ -23,11 +42,14 @@ export default function DashboardPage() {
       }
     }
 
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      router.push("/login");
+      return;
+    }
+
     // Fetch history
     const fetchHistory = async () => {
-      const token = localStorage.getItem("authToken");
-      if (!token) return;
-
       try {
         const response = await fetch(`${SERVER_URL}/api/user/biometrics/history`, {
           headers: {
@@ -93,10 +115,55 @@ export default function DashboardPage() {
       }
     };
 
-    fetchHistory();
-  }, []);
+    const fetchFoodSummary = async () => {
+      try {
+        const response = await fetch(`${SERVER_URL}/api/user/food-logs/summary`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const res = await response.json();
+        if (response.ok && res.success) {
+          setFoodSummary(res.data);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
 
-  // Soft, high-contrast light alerts that match the white-card design framework
+    const fetchActiveGoals = async () => {
+      try {
+        const response = await fetch(`${SERVER_URL}/api/user/goals`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const res = await response.json();
+        if (response.ok && res.success && res.data) {
+          const active = res.data.filter((g: any) => g.status === "active");
+          setActiveGoals(active.slice(0, 3));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    const fetchInsightsSummary = async () => {
+      try {
+        const response = await fetch(`${SERVER_URL}/api/user/insights`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const res = await response.json();
+        if (response.ok && res.success) {
+          setInsightsSummary(res.data);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchHistory();
+    fetchFoodSummary();
+    fetchActiveGoals();
+    fetchInsightsSummary();
+  }, [router]);
+
   const riskStyles = {
     "High Risk": {
       card: "bg-red-50 border border-red-200 shadow-sm text-red-950",
@@ -126,39 +193,114 @@ export default function DashboardPage() {
   const currentRisk = (analysis?.riskScore || "Low Risk") as "Low Risk" | "Medium Risk" | "High Risk";
   const styles = riskStyles[currentRisk] || riskStyles["Low Risk"];
 
-  // Light theme matching styles (Based directly on your screenshots)
   const cardLightStyle = "bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_4px_25px_rgba(0,0,0,0.04)]";
   const cardTitleStyle = "text-sm font-semibold text-slate-500 tracking-wide";
   const cardValueStyle = "text-2xl font-bold text-[#0f172a] tracking-tight";
   const cardSubStatusStyle = "text-xs font-semibold mt-1";
   const cardReasonStyle = "text-xs text-slate-400 mt-1 italic leading-relaxed";
 
+  const getGoalPercent = (goal: any) => {
+    if (goal.goalType === "weight_loss") {
+      if (goal.currentValue <= goal.targetValue) return 100;
+      return Math.max(0, Math.min(100, (goal.targetValue / goal.currentValue) * 100));
+    }
+    return Math.min(100, (goal.currentValue / goal.targetValue) * 100);
+  };
+
+  const getGoalTypeLabel = (type: string) => {
+    switch (type) {
+      case "weight_loss": return "Weight Loss";
+      case "weight_gain": return "Weight Gain";
+      case "hydration": return "Hydration";
+      case "activity": return "Daily Activity";
+      case "nutrition": return "Nutrition Limit";
+      default: return type;
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#f4f6f9] p-6 transition-colors duration-500">
+    <div className="min-h-screen bg-[#f4f6f9] p-6 transition-colors duration-500 text-[#0f172a]">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center flex-wrap gap-4">
           <div>
             <h1 className="text-4xl font-bold text-[#0f172a] tracking-tight">Student Dashboard</h1>
-            <p className="text-slate-500 text-lg mt-2 font-light">Welcome back, <span className="text-blue-600 font-normal">{userName}</span>. Here is your Health Report.</p>
+            <p className="text-slate-500 text-lg mt-2 font-light">
+              Welcome back, <span className="text-blue-600 font-normal">{userName}</span>. Here is your Health Report.
+            </p>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             <button 
-              onClick={() => window.location.href = '/scan'}
-              className="flex items-center space-x-2 bg-[#0f172a] hover:bg-slate-800 active:scale-[0.98] px-5 py-2.5 rounded-lg text-white font-medium transition-all duration-300 cursor-pointer shadow-sm"
+              onClick={() => router.push("/scan")}
+              className="flex items-center space-x-2 bg-[#0f172a] hover:bg-slate-800 active:scale-[0.98] px-5 py-2.5 rounded-lg text-white font-medium transition-all duration-300 cursor-pointer shadow-sm text-sm"
             >
-              <Activity className="w-5 h-5" />
-              <span className="hidden sm:inline-block">New Scan</span>
+              <Activity className="w-4 h-4" />
+              <span>New Scan</span>
             </button>
             <button 
-              onClick={() => window.location.href = '/profile'}
-              className="flex items-center space-x-2 bg-white border border-slate-200 px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-sm"
+              onClick={() => router.push("/profile")}
+              className="flex items-center space-x-2 bg-white border border-slate-200 px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-sm text-sm"
             >
-              <div className="w-8 h-8 rounded-full bg-slate-100 text-[#0f172a] flex items-center justify-center font-bold border border-slate-200">
+              <div className="w-6 h-6 rounded-full bg-slate-100 text-[#0f172a] flex items-center justify-center font-bold border border-slate-200 text-xs">
                 {userName ? userName.charAt(0).toUpperCase() : 'U'}
               </div>
               <span className="font-medium hidden sm:inline-block">Profile</span>
             </button>
+          </div>
+        </div>
+
+        {/* Quick Navigation Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div 
+            onClick={() => router.push("/food-log")}
+            className="bg-white border border-slate-100 rounded-xl p-4 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer flex items-center space-x-3 group"
+          >
+            <div className="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-all">
+              <Apple className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-[#0f172a] text-sm md:text-base">Food Intake</h3>
+              <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mt-0.5">Track Calories</p>
+            </div>
+          </div>
+
+          <div 
+            onClick={() => router.push("/goals")}
+            className="bg-white border border-slate-100 rounded-xl p-4 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer flex items-center space-x-3 group"
+          >
+            <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-all">
+              <Target className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-[#0f172a] text-sm md:text-base">Smart Goals</h3>
+              <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mt-0.5">My Targets</p>
+            </div>
+          </div>
+
+          <div 
+            onClick={() => router.push("/insights")}
+            className="bg-white border border-slate-100 rounded-xl p-4 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer flex items-center space-x-3 group"
+          >
+            <div className="p-3 bg-purple-50 text-purple-600 rounded-xl group-hover:bg-purple-600 group-hover:text-white transition-all">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-[#0f172a] text-sm md:text-base">AI Insights</h3>
+              <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mt-0.5">Biometric Trends</p>
+            </div>
+          </div>
+
+          <div 
+            onClick={() => router.push("/qr-checkin")}
+            className="bg-white border border-slate-100 rounded-xl p-4 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer flex items-center space-x-3 group"
+          >
+            <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl group-hover:bg-emerald-600 group-hover:text-white transition-all">
+              <QrCode className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-[#0f172a] text-sm md:text-base">QR Check-in</h3>
+              <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mt-0.5">Kiosk Sync</p>
+            </div>
           </div>
         </div>
 
@@ -287,7 +429,154 @@ export default function DashboardPage() {
           </Card>
         )}
 
-        {/* Recommendations & Meal Plan */}
+        {/* Enhanced Widgets Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* 1. Today's Nutrition Widget */}
+          <Card 
+            onClick={() => router.push("/food-log")}
+            className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] cursor-pointer hover:shadow-md transition-all group"
+          >
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div>
+                <CardTitle className="text-[#0f172a] text-lg font-bold flex items-center">
+                  <Apple className="w-5 h-5 text-blue-600 mr-2" />
+                  <span>Today's Nutrition</span>
+                </CardTitle>
+                <CardDescription className="text-slate-400">Manage daily food logs</CardDescription>
+              </div>
+              <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-slate-600 transition-colors" />
+            </CardHeader>
+            <CardContent className="space-y-4 pt-2">
+              {foodSummary ? (
+                <>
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-2xl font-black">{Math.round(foodSummary.totalCalories)}</span>
+                    <span className="text-slate-400 text-xs font-semibold">of {Math.round(foodSummary.calorieGoal)} kcal</span>
+                  </div>
+                  {/* Calorie Bar */}
+                  <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-blue-600 rounded-full transition-all duration-500" 
+                      style={{ width: `${Math.min(100, (foodSummary.totalCalories / foodSummary.calorieGoal) * 100)}%` }}
+                    ></div>
+                  </div>
+                  <div className="flex justify-between text-xs font-medium text-slate-500">
+                    <span>Remaining: {Math.round(foodSummary.remaining)} kcal</span>
+                  </div>
+                  {/* Macros Row */}
+                  <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-50 text-center">
+                    <div className="bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-400">P</span>
+                      <p className="font-bold text-slate-800 text-sm">{Math.round(foodSummary.totalProtein)}g</p>
+                    </div>
+                    <div className="bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-400">C</span>
+                      <p className="font-bold text-slate-800 text-sm">{Math.round(foodSummary.totalCarbs)}g</p>
+                    </div>
+                    <div className="bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-400">F</span>
+                      <p className="font-bold text-slate-800 text-sm">{Math.round(foodSummary.totalFat)}g</p>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="py-8 text-center text-slate-400 text-sm flex flex-col items-center justify-center">
+                  <Plus className="w-8 h-8 text-slate-300 mb-1" />
+                  <p>No food logged today. Click to add a meal!</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* 2. Active Goals Widget */}
+          <Card 
+            onClick={() => router.push("/goals")}
+            className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] cursor-pointer hover:shadow-md transition-all group"
+          >
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div>
+                <CardTitle className="text-[#0f172a] text-lg font-bold flex items-center">
+                  <Target className="w-5 h-5 text-indigo-600 mr-2" />
+                  <span>Active Goals</span>
+                </CardTitle>
+                <CardDescription className="text-slate-400">Dynamic tracking targets</CardDescription>
+              </div>
+              <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-slate-600 transition-colors" />
+            </CardHeader>
+            <CardContent className="space-y-4 pt-2">
+              {activeGoals.length > 0 ? (
+                <div className="space-y-3">
+                  {activeGoals.map((goal: any, index: number) => {
+                    const pct = getGoalPercent(goal);
+                    return (
+                      <div key={index} className="space-y-1">
+                        <div className="flex justify-between text-xs font-semibold text-slate-700">
+                          <span>{getGoalTypeLabel(goal.goalType)}</span>
+                          <span>{goal.currentValue} / {goal.targetValue} {goal.unit}</span>
+                        </div>
+                        <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-indigo-600 rounded-full" 
+                            style={{ width: `${pct}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="py-8 text-center text-slate-400 text-sm flex flex-col items-center justify-center">
+                  <Plus className="w-8 h-8 text-slate-300 mb-1" />
+                  <p>No active goals set. Click to configure new targets!</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* 3. AI Insights Preview Widget */}
+          <Card 
+            onClick={() => router.push("/insights")}
+            className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] cursor-pointer hover:shadow-md transition-all group"
+          >
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div>
+                <CardTitle className="text-[#0f172a] text-lg font-bold flex items-center">
+                  <Sparkles className="w-5 h-5 text-purple-600 mr-2 animate-pulse" />
+                  <span>Health Insights</span>
+                </CardTitle>
+                <CardDescription className="text-slate-400">AI-driven biometric analysis</CardDescription>
+              </div>
+              <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-slate-600 transition-colors" />
+            </CardHeader>
+            <CardContent className="space-y-3 pt-2">
+              {insightsSummary && insightsSummary.insights && insightsSummary.insights.length > 0 ? (
+                <>
+                  <p className="text-xs text-slate-500 font-medium leading-relaxed line-clamp-3">
+                    {insightsSummary.overallSummary}
+                  </p>
+                  <div className="border-t border-slate-50 pt-2.5 space-y-2">
+                    {insightsSummary.insights.slice(0, 2).map((item: any, index: number) => (
+                      <div key={index} className="flex items-center justify-between text-xs bg-slate-50 p-2 rounded-lg border border-slate-100">
+                        <span className="font-bold text-slate-700 uppercase tracking-wide">{item.category.replace('_', ' ')}</span>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase ${
+                          item.trend === 'improving' ? 'bg-emerald-50 text-emerald-700' :
+                          item.trend === 'declining' ? 'bg-red-50 text-red-700' : 'bg-amber-50 text-amber-700'
+                        }`}>{item.trend}</span>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="py-8 text-center text-slate-400 text-sm flex flex-col items-center justify-center">
+                  <TrendingUp className="w-8 h-8 text-slate-300 mb-1" />
+                  <p>Complete biometrics tracking to generate AI analysis trends.</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Existing Recommendations & Daily Progress Graph */}
         {analysis && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
             <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
