@@ -22,4 +22,8 @@ func setupApiRoutes(router *gin.Engine) {
 	setupProductRoutes(api)
 	setupDietPlanRoutes(api)
 	setupWeeklyTodoRoutes(api)
+	setupFoodLogRoutes(api)
+	setupGoalRoutes(api)
+	setupInsightRoutes(api)
+	setupQRRoutes(api)
 }
