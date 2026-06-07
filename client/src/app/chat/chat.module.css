@@ -1,0 +1,232 @@
+.pageWrapper {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+  padding: 1.5rem 1rem;
+}
+
+.headerContainer {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  width: 100%;
+  max-width: 48rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  background-color: #f4f7fb;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: #0f172a;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: #f0ede4;
+}
+
+.chatHeader {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.chatContainer {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1.5rem;
+  display: flex;
+  width: 100%;
+  max-width: 48rem;
+  flex-direction: column;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background-color: #f4f7fb;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.introSection {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .introSection {
+    padding: 1.5rem;
+  }
+}
+
+.introSubtitle {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  color: rgba(15, 23, 42, 0.7);
+}
+
+.introDescription {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #334155;
+}
+
+.quickPrompts {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.promptButton {
+  border-radius: 9999px;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  background-color: #f8f7f4;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  color: #0f172a;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  cursor: pointer;
+}
+
+.promptButton:hover {
+  background-color: #f0ede4;
+}
+
+.messagesContainer {
+  flex: 1 1 0%;
+  padding: 1rem;
+}
+
+.messagesContainer > * + * {
+  margin-top: 1rem;
+}
+
+@media (min-width: 640px) {
+  .messagesContainer {
+    padding: 1.5rem;
+  }
+}
+
+.messageRow {
+  display: flex;
+}
+
+.messageRowUser {
+  justify-content: flex-end;
+}
+
+.messageRowAssistant {
+  justify-content: flex-start;
+}
+
+.chatMessage {
+  max-width: 85%;
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+.userMessage {
+  background-color: #0f172a;
+  color: white;
+}
+
+.assistantMessage {
+  background-color: #f0ede4;
+  color: #1f2937;
+  border-left: 4px solid #06b6d4;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.formSection {
+  border-top: 1px solid rgba(15, 23, 42, 0.1);
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .formSection {
+    padding: 1.5rem;
+  }
+}
+
+.formContainer {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.chatInput {
+  min-height: 56px;
+  flex: 1 1 0%;
+  resize: none;
+  border-radius: 1rem;
+  border: 1px solid rgba(226, 232, 240, 0.5);
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.chatInput:focus {
+  border-color: #06b6d4;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.sendButton {
+  display: inline-flex;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  background-color: #0f172a;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: white;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  cursor: pointer;
+  border: none;
+}
+
+.sendButton:hover:not(:disabled) {
+  background-color: #0891b2;
+}
+
+.sendButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
