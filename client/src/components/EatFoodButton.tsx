@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styles from './EatFoodButton.module.css';
 
 interface EatFoodButtonProps {
     barcode?: string;
@@ -84,18 +85,18 @@ export default function EatFoodButton({
     }
 
     return (
-        <div className="fixed bottom-4 right-20 z-50">
+        <div className={styles.eatButtonContainer}>
             <button
                 onClick={handleEatFood}
                 disabled={isLoading}
-                className="bg-green-500 hover:bg-green-600 disabled:bg-green-400 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110 px-4 py-3 min-w-[120px] disabled:cursor-not-allowed"
+                className={styles.eatButton}
                 title="Eat this food"
             >
                 {isLoading ? (
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    <div className={styles.loadingSpinner}></div>
                 ) : (
                     <svg
-                        className="w-5 h-5 mr-2"
+                        className={styles.buttonIcon}
                         fill="currentColor"
                         viewBox="0 0 20 20"
                     >
@@ -106,7 +107,7 @@ export default function EatFoodButton({
                         />
                     </svg>
                 )}
-                <span className="text-sm font-medium">
+                <span className={styles.buttonText}>
                     {isLoading ? "Recording..." : "Eat this food"}
                 </span>
             </button>

@@ -1,0 +1,175 @@
+.nutritionContainer {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Inter', sans-serif;
+}
+
+.nutritionContainer > * + * {
+  margin-top: 1.5rem;
+}
+
+.productCard {
+  background-color: #f0ede4;
+  border: 1px solid rgba(0, 71, 67, 0.1);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.productCardContent {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.productHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.pulseDot {
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 9999px;
+  background-color: #004743;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  margin-top: 0.5rem;
+}
+
+.productInfo {
+  /* container for texts */
+}
+
+.productStatus {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  color: rgba(0, 71, 67, 0.7);
+  font-weight: 500;
+}
+
+.productTitle {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #004743;
+  font-weight: 600;
+}
+
+.productSubtitle {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #374151;
+  margin-top: 0.25rem;
+}
+
+.statsGrid {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.statBox {
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 0.75rem;
+}
+
+.statLabel {
+  color: #6b7280;
+}
+
+.statValue {
+  font-weight: 600;
+  color: #004743;
+}
+
+.infoBox {
+  margin-top: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #4b5563;
+}
+
+.infoLabel {
+  font-weight: 500;
+  color: #004743;
+}
+
+.infoText {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #4b5563;
+  margin-top: 0.75rem;
+}
+
+.errorCard {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.75rem;
+}
+
+.errorCardContent {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.errorStatus {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  color: #b91c1c;
+  font-weight: 500;
+}
+
+.errorTitle {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #991b1b;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.errorText {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #b91c1c;
+  margin-top: 0.5rem;
+}
+
+.analysisCard {
+  background-color: #f0ede4;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.analysisContent {
+  padding: 1.5rem;
+}
+
+.proseContainer {
+  width: 100%;
+}
+
+.proseContainer :global(.prose) {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  max-width: 65ch;
+  color: #374151;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
