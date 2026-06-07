@@ -1,0 +1,68 @@
+/* --- Animations --- */
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.04); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.04); }
+  70% { transform: scale(1); }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wave-move {
+  from { background-position-x: 0; }
+  to { background-position-x: 1440px; }
+}
+
+@keyframes slide-in-from-bottom-2 {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out-to-bottom-2 {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* Base utility classes for animations */
+.animateHeartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.animateFadeInUp {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+.slideInFromBottom2 {
+  animation-name: slide-in-from-bottom-2;
+  animation-duration: 300ms;
+  animation-fill-mode: both;
+}
+
+.slideOutToBottom2 {
+  animation-name: slide-out-to-bottom-2;
+  animation-duration: 300ms;
+  animation-fill-mode: both;
+}
