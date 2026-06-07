@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
+import styles from "./QRBarcodeScanner.module.css";
 
 interface QrScannerConfig {
   fps: number;
@@ -58,8 +59,8 @@ export default function QRScanner({
   }, [onScanSuccess]);
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div id="qr-reader" className="w-full bg-white text-black"></div>
+    <div className={styles.scannerContainer}>
+      <div id="qr-reader" className={styles.scannerBox}></div>
     </div>
   );
 }
