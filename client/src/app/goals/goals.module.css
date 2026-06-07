@@ -1,0 +1,477 @@
+.goalsContainer {
+  min-height: 100vh;
+  background-color: #F4F7FB;
+  padding: 1.5rem;
+  color: #0f172a;
+}
+
+.goalsWrapper {
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.goalsWrapper > * + * {
+  margin-top: 2rem;
+}
+
+.headerSection {
+  /* wrapper */
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #64748b;
+  cursor: pointer;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.backButton:hover {
+  color: #1e293b;
+}
+
+.pageTitle {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  letter-spacing: -0.025em;
+}
+
+.pageSubtitle {
+  color: #475569;
+  margin-top: 0.25rem;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .gridContainer {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.formColumn {
+  /* lg:col-span-1 */
+}
+
+@media (min-width: 1024px) {
+  .formColumn {
+    grid-column: span 1 / span 1;
+  }
+}
+
+.formCard {
+  background-color: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  position: sticky;
+  top: 1.5rem;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.iconTarget {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #2563eb;
+}
+
+.formBody {
+  /* ... */
+}
+
+.formBody > * + * {
+  margin-top: 1rem;
+}
+
+.inputGroup {
+  /* ... */
+}
+
+.inputLabel {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.selectInput {
+  margin-top: 0.25rem;
+  display: block;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid #e2e8f0;
+  background-color: white;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.selectInput:focus {
+  border-color: #3b82f6;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-color: #3b82f6;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.inputGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.textInput {
+  margin-top: 0.25rem;
+  display: flex;
+  height: 2.5rem;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid #e2e8f0;
+  background-color: transparent;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.textInput:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.submitButton {
+  width: 100%;
+  background-color: #0f172a;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #1e293b;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.listsColumn {
+  /* lg:col-span-2 */
+}
+
+@media (min-width: 1024px) {
+  .listsColumn {
+    grid-column: span 2 / span 2;
+  }
+}
+
+.listsColumn > * + * {
+  margin-top: 2rem;
+}
+
+.goalCard {
+  background-color: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.cardHeader {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.iconActivity {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #4f46e5;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.cardContent {
+  padding-top: 0;
+}
+
+.emptyState {
+  text-align: center;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  color: #94a3b8;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.goalItem {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.goalItem:last-child {
+  border-bottom: none;
+}
+
+.goalInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1 1 0%;
+}
+
+.progressRing {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+}
+
+.progressSvg {
+  width: 5rem;
+  height: 5rem;
+  transform: rotate(-90deg);
+}
+
+.progressCircleBg {
+  stroke: #f1f5f9;
+  fill: none;
+}
+
+.progressCircleFg {
+  fill: none;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 1000ms;
+}
+
+.progressCircleCompleted {
+  stroke: #10b981;
+}
+
+.progressCircleActive {
+  stroke: #2563eb;
+}
+
+.progressText {
+  position: absolute;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.goalDetails {
+  flex: 1 1 0%;
+}
+
+.goalName {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.goalStats {
+  color: #64748b;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-top: 0.25rem;
+}
+
+.statHighlight {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.goalMeta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: #94a3b8;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+}
+
+.iconSmall {
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-right: 0.25rem;
+}
+
+.goalActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.updateContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.updateGoalInput {
+  width: 6rem;
+  height: 2.25rem;
+  display: flex;
+  border-radius: 0.375rem;
+  border: 1px solid #e2e8f0;
+  background-color: transparent;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.updateGoalInput:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.iconAward {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #059669;
+}
+
+.completedGoalItem {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.completedGoalItem:last-child {
+  border-bottom: none;
+}
+
+.completedGoalInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.awardIconBg {
+  background-color: #ecfdf5;
+  padding: 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid #d1fae5;
+}
+
+.completedGoalName {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.completedGoalDesc {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: #64748b;
+  margin-top: 0.125rem;
+}
+
+.unlockedBadge {
+  background-color: #d1fae5;
+  color: #065f46;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+}
+
+.loadingScreen {
+  min-height: 100vh;
+  background-color: #F4F7FB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadingContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loadingContent > * + * {
+  margin-top: 1rem;
+}
+
+.loadingIcon {
+  width: 3rem;
+  height: 3rem;
+  color: #0f172a;
+  animation: spin 1s linear infinite;
+}
+
+.loadingText {
+  color: #64748b;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}

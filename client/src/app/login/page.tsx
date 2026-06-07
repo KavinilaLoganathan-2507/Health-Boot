@@ -20,6 +20,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { SERVER_URL } from '@/lib/constants';
+import styles from './login.module.css';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -101,38 +102,38 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#F4F7FB] flex items-center justify-center p-4">
-            <div className="w-full max-w-md">
-                <Card className="bg-[#F4F7FB]">
-                    <CardHeader className="text-center space-y-4">
+        <div className={styles.loginContainer}>
+            <div className={styles.loginWrapper}>
+                <Card className={styles.loginCard}>
+                    <CardHeader className={styles.headerContainer}>
                         <div>
-                            <CardTitle className="text-2xl flex font-bold bg-[#000] bg-clip-text text-transparent">
+                            <CardTitle className={`${styles.titleContainer} ${styles.titleText}`}>
                                 Welcome Back
                             </CardTitle>
-                            <CardDescription className="text-slate-700 mt-2">
+                            <CardDescription className={styles.descriptionText}>
                                 Sign in to your account to continue
                             </CardDescription>
                         </div>
                     </CardHeader>
 
                     <CardContent>
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form onSubmit={handleSubmit} className={styles.formContainer}>
                             {error && (
-                                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+                                <div className={styles.errorBox}>
                                     {error}
                                 </div>
                             )}
 
-                            <div className="space-y-6">
-                                <div>
+                            <div className={styles.inputsContainer}>
+                                <div className={styles.inputGroup}>
                                     <Label
                                         htmlFor="phoneNo"
-                                        className="text-slate-900 font-medium"
+                                        className={styles.inputLabel}
                                     >
                                         Phone Number *
                                     </Label>
-                                    <div className="relative mt-2">
-                                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-500" />
+                                    <div className={styles.inputWrapper}>
+                                        <Phone className={styles.inputIcon} />
                                         <Input
                                             id="phoneNo"
                                             type="tel"
@@ -144,21 +145,21 @@ export default function LoginPage() {
                                                     phoneNo: e.target.value,
                                                 })
                                             }
-                                            className="pl-10 bg-slate-50 text-slate-900 placeholder:text-slate-500"
+                                            className={styles.inputField}
                                             placeholder="Enter your phone number"
                                         />
                                     </div>
                                 </div>
 
-                                <div>
+                                <div className={styles.inputGroup}>
                                     <Label
                                         htmlFor="password"
-                                        className="text-slate-900 font-medium"
+                                        className={styles.inputLabel}
                                     >
                                         Password *
                                     </Label>
-                                    <div className="relative mt-2">
-                                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-500" />
+                                    <div className={styles.inputWrapper}>
+                                        <Lock className={styles.inputIcon} />
                                         <Input
                                             id="password"
                                             type="password"
@@ -170,26 +171,26 @@ export default function LoginPage() {
                                                     password: e.target.value,
                                                 })
                                             }
-                                            className="pl-10 bg-slate-50 text-slate-900 placeholder:text-slate-500"
+                                            className={styles.inputField}
                                             placeholder="Enter your password"
                                         />
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex items-center justify-between text-sm">
-                                <label className="flex items-center space-x-2">
+                            <div className={styles.optionsContainer}>
+                                <label className={styles.rememberLabel}>
                                     <input
                                         type="checkbox"
-                                        className="rounded border-slate-300 text-slate-900 focus:ring-slate-900"
+                                        className={styles.checkboxInput}
                                     />
-                                    <span className="text-slate-700">
+                                    <span className={styles.rememberText}>
                                         Remember me
                                     </span>
                                 </label>
                                 <a
                                     href="#"
-                                    className="text-slate-900 hover:text-cyan-500 font-medium"
+                                    className={styles.forgotLink}
                                 >
                                     Forgot password?
                                 </a>
@@ -198,20 +199,20 @@ export default function LoginPage() {
                             <Button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full bg-slate-900 text-white font-medium py-3 transition-all duration-300 transform hover:scale-[1.02] mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className={styles.submitButton}
                             >
                                 {isLoading ? "Signing In..." : "Sign In"}
                                 {!isLoading && (
-                                    <ChevronRight className="w-5 h-5 ml-2" />
+                                    <ChevronRight className={styles.buttonIcon} />
                                 )}
                             </Button>
 
-                            <div className="text-center mt-6">
-                                <p className="text-slate-700">
+                            <div className={styles.footerContainer}>
+                                <p className={styles.footerText}>
                                     Don&apos;t have an account?{" "}
                                     <a
                                         href={`/signup?redirect=${encodeURIComponent(redirectUrl)}`}
-                                        className="text-slate-900 hover:text-cyan-500 font-medium"
+                                        className={styles.signupLink}
                                     >
                                         Sign up here
                                     </a>
