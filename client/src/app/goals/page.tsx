@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, Target, Award, Trash2, Edit2, Plus, Calendar, Activity, Check, X, Loader2, RefreshCw } from "lucide-react";
 import { SERVER_URL } from "@/lib/constants";
 import { toast } from "sonner";
-import styles from "./goals.module.css";
 
 interface Goal {
   id: string;
@@ -204,21 +203,21 @@ export default function GoalsPage() {
     const strokeOffset = circ - (pct / 100) * circ;
 
     return (
-      <div className={styles.progressRing}>
-        <svg className={styles.progressSvg}>
+      <div className="relative flex items-center justify-center w-20 h-20">
+        <svg className="w-20 h-20 transform -rotate-90">
           <circle
             cx="40"
             cy="40"
             r={radius}
-            className={styles.progressCircleBg}
+            className="stroke-slate-100 fill-none"
             strokeWidth="6"
           />
           <circle
             cx="40"
             cy="40"
             r={radius}
-            className={`${styles.progressCircleFg} ${
-              goal.status === "completed" ? styles.progressCircleCompleted : styles.progressCircleActive
+            className={`fill-none transition-all duration-1000 ease-out ${
+              goal.status === "completed" ? "stroke-emerald-500" : "stroke-blue-600"
             }`}
             strokeWidth="6"
             strokeDasharray={circ}
@@ -226,7 +225,7 @@ export default function GoalsPage() {
             strokeLinecap="round"
           />
         </svg>
-        <span className={styles.progressText}>{Math.round(pct)}%</span>
+        <span className="absolute text-xs font-bold text-[#0f172a]">{Math.round(pct)}%</span>
       </div>
     );
   };
@@ -245,47 +244,47 @@ export default function GoalsPage() {
 
   if (loading) {
     return (
-      <div className={styles.loadingScreen}>
-        <div className={styles.loadingContent}>
-          <Loader2 className={styles.loadingIcon} />
-          <p className={styles.loadingText}>Loading goals...</p>
+      <div className="min-h-screen bg-[#F4F7FB] flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <Loader2 className="w-12 h-12 text-[#0f172a] animate-spin" />
+          <p className="text-slate-500 font-medium">Loading goals...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={styles.goalsContainer}>
-      <div className={styles.goalsWrapper}>
+    <div className="min-h-screen bg-[#F4F7FB] p-6 text-[#0f172a]">
+      <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
-        <div className={styles.headerSection}>
-          <div className={styles.backButton} onClick={() => router.push("/dashboard")}>
+        <div>
+          <div className="flex items-center space-x-2 text-sm text-slate-500 cursor-pointer hover:text-slate-800 transition-colors" onClick={() => router.push("/dashboard")}>
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Dashboard</span>
           </div>
-          <h1 className={styles.pageTitle}>Smart Goals Engine</h1>
-          <p className={styles.pageSubtitle}>Set healthy targets, log dynamic updates, and review your progress metrics.</p>
+          <h1 className="text-4xl font-bold mt-2 tracking-tight">Smart Goals Engine</h1>
+          <p className="text-slate-600 mt-1">Set healthy targets, log dynamic updates, and review your progress metrics.</p>
         </div>
 
-        <div className={styles.gridContainer}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Create Goal Form */}
-          <div className={styles.formColumn}>
-            <Card className={styles.formCard}>
+          <div className="lg:col-span-1">
+            <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] sticky top-6">
               <CardHeader>
-                <CardTitle className={styles.cardTitle}>
-                  <Target className={styles.iconTarget} />
+                <CardTitle className="text-xl font-bold flex items-center space-x-2">
+                  <Target className="w-5 h-5 text-blue-600" />
                   <span>Set New Goal</span>
                 </CardTitle>
                 <CardDescription>Configure target values and milestones.</CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className={styles.formBody}>
-                  <div className={styles.inputGroup}>
-                    <label className={styles.inputLabel}>Goal Type</label>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="text-xs font-semibold text-slate-500 uppercase">Goal Type</label>
                     <select
                       value={goalType}
                       onChange={(e) => setGoalType(e.target.value)}
-                      className={styles.selectInput}
+                      className="mt-1 block w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     >
                       <option value="hydration">Daily Hydration</option>
                       <option value="activity">Daily Activity</option>
@@ -295,9 +294,9 @@ export default function GoalsPage() {
                     </select>
                   </div>
 
-                  <div className={styles.inputGrid}>
-                    <div className={styles.inputGroup}>
-                      <label className={styles.inputLabel}>Target Value</label>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 uppercase">Target Value</label>
                       <Input
                         type="number"
                         step="0.1"
@@ -305,40 +304,40 @@ export default function GoalsPage() {
                         value={targetValue}
                         onChange={(e) => setTargetValue(e.target.value)}
                         required
-                        className={styles.textInput}
+                        className="mt-1"
                       />
                     </div>
-                    <div className={styles.inputGroup}>
-                      <label className={styles.inputLabel}>Current Value</label>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 uppercase">Current Value</label>
                       <Input
                         type="number"
                         step="0.1"
                         value={currentValue}
                         onChange={(e) => setCurrentValue(e.target.value)}
-                        className={styles.textInput}
+                        className="mt-1"
                       />
                     </div>
                   </div>
 
-                  <div className={styles.inputGrid}>
-                    <div className={styles.inputGroup}>
-                      <label className={styles.inputLabel}>Unit</label>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 uppercase">Unit</label>
                       <Input
                         value={unit}
                         onChange={(e) => setUnit(e.target.value)}
                         required
                         placeholder="e.g. steps"
-                        className={styles.textInput}
+                        className="mt-1"
                       />
                     </div>
-                    <div className={styles.inputGroup}>
-                      <label className={styles.inputLabel}>Target Date</label>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 uppercase">Target Date</label>
                       <Input
                         type="date"
                         value={targetDate}
                         onChange={(e) => setTargetDate(e.target.value)}
                         required
-                        className={styles.textInput}
+                        className="mt-1"
                       />
                     </div>
                   </div>
@@ -346,7 +345,7 @@ export default function GoalsPage() {
                   <Button
                     type="submit"
                     disabled={submitting}
-                    className={styles.submitButton}
+                    className="w-full bg-[#0f172a] hover:bg-slate-800 text-white font-medium flex items-center justify-center space-x-2 py-3 rounded-lg mt-2"
                   >
                     {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
                     <span>Activate Goal</span>
@@ -357,45 +356,45 @@ export default function GoalsPage() {
           </div>
 
           {/* Active Goals list and History */}
-          <div className={styles.listsColumn}>
-            <Card className={styles.goalCard}>
-              <CardHeader className={styles.cardHeader}>
-                <CardTitle className={styles.cardTitle}>
-                  <Activity className={styles.iconActivity} />
+          <div className="lg:col-span-2 space-y-8">
+            <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
+              <CardHeader className="pb-3 border-b border-slate-50">
+                <CardTitle className="text-lg font-bold flex items-center space-x-2">
+                  <Activity className="w-5 h-5 text-indigo-600 animate-pulse" />
                   <span>Active Goals</span>
                 </CardTitle>
                 <CardDescription>Track and update progress of ongoing objectives.</CardDescription>
               </CardHeader>
-              <CardContent className={styles.cardContent}>
+              <CardContent className="divide-y divide-slate-100 pt-0">
                 {activeGoals.length === 0 ? (
-                  <div className={styles.emptyState}>
+                  <div className="text-center py-12 text-slate-400 text-sm">
                     No active goals set. Use the form to start tracking progress.
                   </div>
                 ) : (
                   activeGoals.map((goal) => (
-                    <div key={goal.id} className={styles.goalItem}>
-                      <div className={styles.goalInfo}>
+                    <div key={goal.id} className="py-6 flex items-start justify-between gap-6">
+                      <div className="flex items-center space-x-4 flex-1">
                         {renderGoalCircle(goal)}
-                        <div className={styles.goalDetails}>
-                          <h4 className={styles.goalName}>{getGoalTypeName(goal.goalType)}</h4>
-                          <div className={styles.goalStats}>
-                            Current: <span className={styles.statHighlight}>{goal.currentValue}</span> / Target: <span className={styles.statHighlight}>{goal.targetValue} {goal.unit}</span>
+                        <div className="flex-1">
+                          <h4 className="font-bold text-[#0f172a] text-lg">{getGoalTypeName(goal.goalType)}</h4>
+                          <div className="text-slate-500 text-sm mt-1">
+                            Current: <span className="font-semibold text-slate-800">{goal.currentValue}</span> / Target: <span className="font-semibold text-slate-800">{goal.targetValue} {goal.unit}</span>
                           </div>
-                          <div className={styles.goalMeta}>
-                            <span className={styles.metaItem}><Calendar className={styles.iconSmall} /> {getDaysRemaining(goal.targetDate)}</span>
+                          <div className="flex items-center space-x-4 text-xs text-slate-400 mt-2 font-medium">
+                            <span className="flex items-center"><Calendar className="w-3.5 h-3.5 mr-1" /> {getDaysRemaining(goal.targetDate)}</span>
                           </div>
                         </div>
                       </div>
 
-                      <div className={styles.goalActions}>
+                      <div className="flex flex-col items-end space-y-2">
                         {updatingGoalId === goal.id ? (
-                          <div className={styles.updateContainer}>
+                          <div className="flex items-center space-x-2">
                             <Input
                               type="number"
                               placeholder="New value"
                               value={newProgressValue}
                               onChange={(e) => setNewProgressValue(e.target.value)}
-                              className={styles.updateGoalInput}
+                              className="w-24 h-9"
                             />
                             <Button size="sm" onClick={() => handleUpdateProgress(goal.id)} className="bg-emerald-600 hover:bg-emerald-700 text-white h-9 px-3">
                               <Check className="w-4 h-4" />
@@ -405,12 +404,12 @@ export default function GoalsPage() {
                             </Button>
                           </div>
                         ) : (
-                          <div className={styles.actionButtons}>
+                          <div className="flex space-x-2">
                             <Button size="sm" variant="outline" onClick={() => {
                               setUpdatingGoalId(goal.id);
                               setNewProgressValue(goal.currentValue.toString());
                             }} className="flex items-center">
-                              <RefreshCw className={styles.iconSmall} /> Update
+                              <RefreshCw className="w-3.5 h-3.5 mr-1.5" /> Update
                             </Button>
                             <Button size="sm" variant="ghost" onClick={() => handleDeleteGoal(goal.id)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
                               <Trash2 className="w-4 h-4" />
@@ -425,34 +424,34 @@ export default function GoalsPage() {
             </Card>
 
             {/* Completed Goals */}
-            <Card className={styles.goalCard}>
-              <CardHeader className={styles.cardHeader}>
-                <CardTitle className={styles.cardTitle}>
-                  <Award className={styles.iconAward} />
+            <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
+              <CardHeader className="pb-3 border-b border-slate-50">
+                <CardTitle className="text-lg font-bold flex items-center space-x-2">
+                  <Award className="w-5 h-5 text-emerald-600" />
                   <span>Completed Achievements</span>
                 </CardTitle>
                 <CardDescription>Historical accomplishments.</CardDescription>
               </CardHeader>
-              <CardContent className={styles.cardContent}>
+              <CardContent className="divide-y divide-slate-100 pt-0">
                 {completedGoals.length === 0 ? (
-                  <div className={styles.emptyState}>
+                  <div className="text-center py-8 text-slate-400 text-sm">
                     No achievements unlocked yet. Keep working towards your active goals!
                   </div>
                 ) : (
                   completedGoals.map((goal) => (
-                    <div key={goal.id} className={styles.completedGoalItem}>
-                      <div className={styles.completedGoalInfo}>
-                        <div className={styles.awardIconBg}>
-                          <Award className={styles.iconAward} />
+                    <div key={goal.id} className="py-4 flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="bg-emerald-50 p-2.5 rounded-full border border-emerald-100">
+                          <Award className="w-5 h-5 text-emerald-600" />
                         </div>
                         <div>
-                          <h4 className={styles.completedGoalName}>{getGoalTypeName(goal.goalType)}</h4>
-                          <p className={styles.completedGoalDesc}>
+                          <h4 className="font-bold text-slate-800">{getGoalTypeName(goal.goalType)}</h4>
+                          <p className="text-xs text-slate-500 mt-0.5">
                             Reached target of {goal.targetValue} {goal.unit}
                           </p>
                         </div>
                       </div>
-                      <span className={styles.unlockedBadge}>
+                      <span className="bg-emerald-100 text-emerald-800 text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full">
                         Unlocked
                       </span>
                     </div>

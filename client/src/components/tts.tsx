@@ -14,8 +14,6 @@ import {
   X,
 } from 'lucide-react';
 
-import styles from './tts.module.css';
-
 // Audio cache to store generated audio
 const audioCache = new Map<string, HTMLAudioElement>();
 
@@ -133,47 +131,47 @@ export default function TTS({ text }: { text: string }) {
     return (
         <>
             {/* Floating Action Button */}
-            <div className={styles.fabContainer}>
+            <div className="fixed bottom-4 right-4 z-50">
                 <button
                     onClick={handleFloatingButtonClick}
-                    className={styles.floatingButton}
+                    className="w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
                     title="Listen to nutrition analysis"
                 >
                     {isGenerating ? (
-                        <Loader2 className={styles.spinIconLg} />
+                        <Loader2 className="w-6 h-6 animate-spin" />
                     ) : hasAudio ? (
-                        <Play className={styles.iconLarge} />
+                        <Play className="w-6 h-6" />
                     ) : (
-                        <Volume2 className={styles.iconLarge} />
+                        <Volume2 className="w-6 h-6" />
                     )}
                 </button>
             </div>
 
             {/* TTS Popup */}
             {isVisible && (
-                <div className={styles.popupContainer}>
-                    <div className={styles.ttsPopup}>
+                <div className="fixed bottom-20 right-4 z-50 animate-in slide-in-from-bottom-2 duration-300">
+                    <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-4 max-w-sm">
                         {/* Header */}
-                        <div className={styles.popupHeader}>
-                            <div className={styles.headerLeft}>
-                                <div className={styles.headerIconBg}>
-                                    <CheckCircle className={styles.headerIcon} />
+                        <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                    <CheckCircle className="w-5 h-5 text-white" />
                                 </div>
-                                <span className={styles.headerTitle}>
+                                <span className="font-medium text-gray-800">
                                     AI Assistant
                                 </span>
                             </div>
                             <button
                                 onClick={handleClose}
-                                className={styles.closeButton}
+                                className="text-gray-400 hover:text-gray-600 transition-colors"
                             >
-                                <X className={styles.closeIcon} />
+                                <X className="w-5 h-5" />
                             </button>
                         </div>
 
                         {/* Content */}
-                        <div className={styles.popupContent}>
-                            <p className={styles.contentText}>
+                        <div className="mb-3">
+                            <p className="text-sm text-gray-600 line-clamp-2">
                                 {text.length > 100
                                     ? `${text.substring(0, 100)}...`
                                     : text}
@@ -181,10 +179,10 @@ export default function TTS({ text }: { text: string }) {
                         </div>
 
                         {/* Controls */}
-                        <div className={styles.popupControls}>
+                        <div className="flex items-center gap-2">
                             {isGenerating ? (
-                                <div className={styles.generatingText}>
-                                    <Loader2 className={styles.spinIcon} />
+                                <div className="flex items-center gap-2 text-sm text-gray-500">
+                                    <Loader2 className="w-4 h-4 animate-spin" />
                                     Generating audio...
                                 </div>
                             ) : (
@@ -192,20 +190,20 @@ export default function TTS({ text }: { text: string }) {
                                     <button
                                         onClick={handlePlayPause}
                                         disabled={!hasAudio}
-                                        className={`${styles.controlButton} ${
+                                        className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                                             hasAudio
-                                                ? styles.playPauseButtonActive
-                                                : styles.playPauseButtonInactive
+                                                ? "bg-blue-500 text-white hover:bg-blue-600"
+                                                : "bg-gray-200 text-gray-400 cursor-not-allowed"
                                         }`}
                                     >
                                         {isPlaying ? (
                                             <>
-                                                <Pause className={styles.iconSmall} />
+                                                <Pause className="w-4 h-4" />
                                                 Pause
                                             </>
                                         ) : (
                                             <>
-                                                <Play className={styles.iconSmall} />
+                                                <Play className="w-4 h-4" />
                                                 Play
                                             </>
                                         )}
@@ -214,9 +212,9 @@ export default function TTS({ text }: { text: string }) {
                                     {hasAudio && (
                                         <button
                                             onClick={handleReplay}
-                                            className={`${styles.controlButton} ${styles.actionButton}`}
+                                            className="flex items-center gap-2 px-3 py-2 bg-green-500 text-white rounded-md text-sm font-medium hover:bg-green-600 transition-colors"
                                         >
-                                            <RotateCcw className={styles.iconSmall} />
+                                            <RotateCcw className="w-4 h-4" />
                                             Replay
                                         </button>
                                     )}
@@ -224,9 +222,9 @@ export default function TTS({ text }: { text: string }) {
                                     {!hasAudio && (
                                         <button
                                             onClick={handleTTS}
-                                            className={`${styles.controlButton} ${styles.actionButton}`}
+                                            className="flex items-center gap-2 px-3 py-2 bg-green-500 text-white rounded-md text-sm font-medium hover:bg-green-600 transition-colors"
                                         >
-                                            <Volume2 className={styles.iconSmall} />
+                                            <Volume2 className="w-4 h-4" />
                                             Generate
                                         </button>
                                     )}

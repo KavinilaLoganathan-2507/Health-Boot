@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Activity, Apple, Trash2, Edit2, Plus, ArrowLeft, Loader2, Sparkles, Check, X, Search, Barcode } from "lucide-react";
 import { SERVER_URL } from "@/lib/constants";
 import { toast } from "sonner";
-import styles from "./food-log.module.css";
 
 interface FoodLog {
   id: string;
@@ -284,35 +283,35 @@ export default function FoodLogPage() {
 
   if (loading) {
     return (
-      <div className={styles.loadingScreen}>
-        <div className={styles.loadingContent}>
-          <Loader2 className={styles.loadingIcon} />
-          <p className={styles.loadingText}>Loading food logs...</p>
+      <div className="min-h-screen bg-[#F4F7FB] flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <Loader2 className="w-12 h-12 text-[#0f172a] animate-spin" />
+          <p className="text-slate-500 font-medium">Loading food logs...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={styles.foodLogContainer}>
-      <div className={styles.foodLogWrapper}>
+    <div className="min-h-screen bg-[#F4F7FB] p-6 text-[#0f172a]">
+      <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
-        <div className={styles.headerSection}>
+        <div className="flex justify-between items-center">
           <div>
-            <div className={styles.backButton} onClick={() => router.push("/dashboard")}>
+            <div className="flex items-center space-x-2 text-sm text-slate-500 cursor-pointer hover:text-slate-800 transition-colors" onClick={() => router.push("/dashboard")}>
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Dashboard</span>
             </div>
-            <h1 className={styles.pageTitle}>Food Intake Tracker</h1>
-            <p className={styles.pageSubtitle}>Log your daily meals, count macros, and reach your calorie goals.</p>
+            <h1 className="text-4xl font-bold mt-2 tracking-tight">Food Intake Tracker</h1>
+            <p className="text-slate-600 mt-1">Log your daily meals, count macros, and reach your calorie goals.</p>
           </div>
         </div>
 
-        <div className={styles.gridContainer}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Left: Logger and Listing */}
-          <div className={styles.mainColumn}>
+          <div className="lg:col-span-2 space-y-8">
             {/* Meal Type Tabs */}
-            <div className={styles.tabsContainer}>
+            <div className="flex bg-white border border-slate-200/60 p-1.5 rounded-xl shadow-[0_4px_10px_rgba(0,0,0,0.01)]">
               {["Breakfast", "Lunch", "Dinner", "Snack"].map((tab) => (
                 <button
                   key={tab}
@@ -320,10 +319,10 @@ export default function FoodLogPage() {
                     setActiveTab(tab);
                     setEditingId(null);
                   }}
-                  className={`${styles.tabButton} ${
+                  className={`flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-all duration-300 ${
                     activeTab === tab
-                      ? styles.tabButtonActive
-                      : styles.tabButtonInactive
+                      ? "bg-[#0f172a] text-white shadow-md scale-[1.01]"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                   }`}
                 >
                   {tab}
@@ -332,28 +331,28 @@ export default function FoodLogPage() {
             </div>
 
             {/* Quick Barcode Scan Section */}
-            <Card className={styles.logFormCard}>
-              <CardHeader className={styles.cardHeader}>
-                <CardTitle className={styles.cardTitle}>
-                  <Barcode className={styles.iconBarcode} />
+            <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.015)] transition-all">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg font-bold flex items-center space-x-2">
+                  <Barcode className="w-5 h-5 text-indigo-600" />
                   <span>Autofill via Barcode Scan</span>
                 </CardTitle>
-                <CardDescription className={styles.cardDescription}>Scan or type product barcode to search OpenFoodFacts database.</CardDescription>
+                <CardDescription>Scan or type product barcode to search OpenFoodFacts database.</CardDescription>
               </CardHeader>
-              <CardContent className={styles.barcodeFormContent}>
-                <div className={styles.barcodeInputWrapper}>
+              <CardContent className="flex space-x-2">
+                <div className="relative flex-1">
                   <Input
                     placeholder="Enter EAN/UPC Barcode (e.g., 5449000000996)"
                     value={barcode}
                     onChange={(e) => setBarcode(e.target.value)}
-                    className={styles.barcodeInput}
+                    className="pl-10"
                   />
-                  <Search className={styles.barcodeIcon} />
+                  <Search className="absolute left-3.5 top-3 w-4 h-4 text-slate-400" />
                 </div>
                 <Button 
                   onClick={handleBarcodeSearch} 
                   disabled={scanning}
-                  className={styles.barcodeButton}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium"
                 >
                   {scanning ? <Loader2 className="w-4 h-4 animate-spin" /> : "Fetch"}
                 </Button>
@@ -361,79 +360,79 @@ export default function FoodLogPage() {
             </Card>
 
             {/* Log Food Form */}
-            <Card className={styles.logFormCard}>
-              <CardHeader className={styles.cardHeader}>
-                <CardTitle className={styles.cardTitle}>
-                  <Apple className={styles.iconApple} />
+            <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold flex items-center space-x-2">
+                  <Apple className="w-5 h-5 text-blue-600" />
                   <span>Log Food to {activeTab}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className={styles.logForm}>
-                  <div className={styles.formGrid2}>
-                    <div className={styles.inputGroup}>
-                      <label className={styles.inputLabel}>Food Name *</label>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 uppercase">Food Name *</label>
                       <Input
                         placeholder="e.g. Avocado Toast"
                         value={foodName}
                         onChange={(e) => setFoodName(e.target.value)}
                         required
-                        className={styles.formInput}
+                        className="mt-1"
                       />
                     </div>
-                    <div className={styles.inputGroup}>
-                      <label className={styles.inputLabel}>Calories (kcal) *</label>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 uppercase">Calories (kcal) *</label>
                       <Input
                         type="number"
                         placeholder="e.g. 320"
                         value={calories}
                         onChange={(e) => setCalories(e.target.value)}
                         required
-                        className={styles.formInput}
+                        className="mt-1"
                       />
                     </div>
                   </div>
 
-                  <div className={styles.formGrid4}>
-                    <div className={styles.inputGroup}>
-                      <label className={styles.inputLabel}>Protein (g)</label>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 uppercase">Protein (g)</label>
                       <Input
                         type="number"
                         placeholder="e.g. 12"
                         value={protein}
                         onChange={(e) => setProtein(e.target.value)}
-                        className={styles.formInput}
+                        className="mt-1"
                       />
                     </div>
-                    <div className={styles.inputGroup}>
-                      <label className={styles.inputLabel}>Carbs (g)</label>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 uppercase">Carbs (g)</label>
                       <Input
                         type="number"
                         placeholder="e.g. 24"
                         value={carbs}
                         onChange={(e) => setCarbs(e.target.value)}
-                        className={styles.formInput}
+                        className="mt-1"
                       />
                     </div>
-                    <div className={styles.inputGroup}>
-                      <label className={styles.inputLabel}>Fat (g)</label>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 uppercase">Fat (g)</label>
                       <Input
                         type="number"
                         placeholder="e.g. 8"
                         value={fat}
                         onChange={(e) => setFat(e.target.value)}
-                        className={styles.formInput}
+                        className="mt-1"
                       />
                     </div>
-                    <div className={styles.inputGroup}>
-                      <label className={styles.inputLabel}>Quantity (Portions)</label>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 uppercase">Quantity (Portions)</label>
                       <Input
                         type="number"
                         step="0.1"
                         placeholder="1.0"
                         value={quantity}
                         onChange={(e) => setQuantity(e.target.value)}
-                        className={styles.formInput}
+                        className="mt-1"
                       />
                     </div>
                   </div>
@@ -441,7 +440,7 @@ export default function FoodLogPage() {
                   <Button
                     type="submit"
                     disabled={submitting}
-                    className={styles.submitButton}
+                    className="w-full bg-[#0f172a] hover:bg-slate-800 text-white font-medium flex items-center justify-center space-x-2 py-3 rounded-lg"
                   >
                     {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
                     <span>Add to {activeTab}</span>
@@ -451,58 +450,58 @@ export default function FoodLogPage() {
             </Card>
 
             {/* Today's Meals Section */}
-            <Card className={styles.logFormCard}>
-              <CardHeader className={styles.logsCardHeader}>
-                <CardTitle className={styles.cardTitle}>Logged in {activeTab}</CardTitle>
-                <CardDescription className={styles.cardDescription}>Review and modify entries logged for this meal category.</CardDescription>
+            <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
+              <CardHeader className="pb-3 border-b border-slate-50">
+                <CardTitle className="text-lg font-bold">Logged in {activeTab}</CardTitle>
+                <CardDescription>Review and modify entries logged for this meal category.</CardDescription>
               </CardHeader>
-              <CardContent className={styles.logsCardContent}>
+              <CardContent className="divide-y divide-slate-100 pt-0">
                 {filteredLogs.length === 0 ? (
-                  <div className={styles.emptyLogs}>
+                  <div className="text-center py-10 text-slate-400 text-sm">
                     No items logged in {activeTab} yet.
                   </div>
                 ) : (
                   filteredLogs.map((item) => (
-                    <div key={item.id} className={styles.logItem}>
+                    <div key={item.id} className="py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
                       {editingId === item.id ? (
                         /* Edit Row State */
-                        <div className={styles.editRowWrapper}>
-                          <div className={styles.formGrid2}>
+                        <div className="w-full space-y-3">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <Input
                               value={editFoodName}
                               onChange={(e) => setEditFoodName(e.target.value)}
                               placeholder="Food name"
-                              className={styles.editInput}
+                              className="h-9"
                             />
                             <Input
                               type="number"
                               value={editCalories}
                               onChange={(e) => setEditCalories(e.target.value)}
                               placeholder="Calories"
-                              className={styles.editInput}
+                              className="h-9"
                             />
                           </div>
-                          <div className={styles.formGrid4}>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                             <Input
                               type="number"
                               value={editProtein}
                               onChange={(e) => setEditProtein(e.target.value)}
                               placeholder="Protein"
-                              className={styles.editInput}
+                              className="h-9"
                             />
                             <Input
                               type="number"
                               value={editCarbs}
                               onChange={(e) => setEditCarbs(e.target.value)}
                               placeholder="Carbs"
-                              className={styles.editInput}
+                              className="h-9"
                             />
                             <Input
                               type="number"
                               value={editFat}
                               onChange={(e) => setEditFat(e.target.value)}
                               placeholder="Fat"
-                              className={styles.editInput}
+                              className="h-9"
                             />
                             <Input
                               type="number"
@@ -510,14 +509,14 @@ export default function FoodLogPage() {
                               value={editQuantity}
                               onChange={(e) => setEditQuantity(e.target.value)}
                               placeholder="Quantity"
-                              className={styles.editInput}
+                              className="h-9"
                             />
                           </div>
-                          <div className={styles.editRowButtons}>
-                            <Button size="sm" onClick={() => handleSaveEdit(item.id)} className={styles.saveBtn}>
+                          <div className="flex space-x-2 pt-1">
+                            <Button size="sm" onClick={() => handleSaveEdit(item.id)} className="bg-emerald-600 hover:bg-emerald-700 text-white">
                               <Check className="w-4 h-4 mr-1" /> Save
                             </Button>
-                            <Button size="sm" onClick={() => setEditingId(null)} className={styles.cancelBtn}>
+                            <Button size="sm" variant="outline" onClick={() => setEditingId(null)}>
                               <X className="w-4 h-4 mr-1" /> Cancel
                             </Button>
                           </div>
@@ -525,34 +524,34 @@ export default function FoodLogPage() {
                       ) : (
                         /* Regular Row Display */
                         <>
-                          <div className={styles.displayRowInfo}>
-                            <div className={styles.foodName}>
+                          <div>
+                            <div className="font-semibold text-[#0f172a] text-base">
                               {item.foodName}
                               {item.quantity !== 1 && (
-                                <span className={styles.foodQuantity}>({item.quantity} portions)</span>
+                                <span className="text-xs font-normal text-slate-400 ml-2">({item.quantity} portions)</span>
                               )}
                             </div>
-                            <div className={styles.foodMacros}>
+                            <div className="flex space-x-3 text-xs text-slate-500 mt-1">
                               <span>P: {Math.round(item.protein * item.quantity)}g</span>
                               <span>C: {Math.round(item.carbs * item.quantity)}g</span>
                               <span>F: {Math.round(item.fat * item.quantity)}g</span>
                             </div>
                           </div>
-                          <div className={styles.displayRowStats}>
-                            <div className={styles.caloriesBlock}>
-                              <span className={styles.caloriesValue}>{Math.round(item.calories * item.quantity)}</span>
-                              <span className={styles.caloriesUnit}>kcal</span>
+                          <div className="flex items-center space-x-6">
+                            <div className="text-right">
+                              <span className="font-bold text-[#0f172a] text-lg">{Math.round(item.calories * item.quantity)}</span>
+                              <span className="text-xs text-slate-400 font-normal ml-1">kcal</span>
                             </div>
-                            <div className={styles.actionIcons}>
+                            <div className="flex space-x-1">
                               <button
                                 onClick={() => handleStartEdit(item)}
-                                className={`${styles.actionIconBtn} ${styles.editIconBtn}`}
+                                className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-50 transition-colors"
                               >
                                 <Edit2 className="w-4 h-4" />
                               </button>
                               <button
                                 onClick={() => handleDelete(item.id)}
-                                className={`${styles.actionIconBtn} ${styles.deleteIconBtn}`}
+                                className="p-2 text-red-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
@@ -568,53 +567,53 @@ export default function FoodLogPage() {
           </div>
 
           {/* Right Sidebar: Nutrition Overview */}
-          <div className={styles.sidebarColumn}>
-            <Card className={styles.macroCard}>
-              <CardHeader className={styles.summaryHeader}>
-                <CardTitle className={styles.summaryTitle}>
-                  <Sparkles className={styles.summaryIcon} />
+          <div className="space-y-8">
+            <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] overflow-hidden">
+              <CardHeader className="bg-[#0f172a] text-white py-6">
+                <CardTitle className="text-xl font-bold flex items-center space-x-2">
+                  <Sparkles className="w-5 h-5 text-indigo-400" />
                   <span>Calorie Intake Progress</span>
                 </CardTitle>
-                <CardDescription className={styles.summaryDesc}>Daily calorie summary metrics.</CardDescription>
+                <CardDescription className="text-indigo-200">Daily calorie summary metrics.</CardDescription>
               </CardHeader>
-              <CardContent className={styles.summaryContent}>
+              <CardContent className="pt-6 space-y-6">
                 {/* SVG Progress Ring */}
-                <div className={styles.ringContainer}>
-                  <div className={styles.progressRing}>
-                    <svg className={styles.progressSvg}>
+                <div className="flex justify-center items-center py-4">
+                  <div className="relative flex items-center justify-center">
+                    <svg className="w-40 h-40 transform -rotate-90">
                       <circle
                         cx="80"
                         cy="80"
                         r={radius}
-                        className={styles.progressCircleBg}
+                        className="stroke-slate-100 fill-none"
                         strokeWidth="12"
                       />
                       <circle
                         cx="80"
                         cy="80"
                         r={radius}
-                        className={styles.progressCircleFg}
+                        className="stroke-[#0f172a] fill-none transition-all duration-1000 ease-out"
                         strokeWidth="12"
                         strokeDasharray={circumference}
                         strokeDashoffset={strokeOffset}
                         strokeLinecap="round"
                       />
                     </svg>
-                    <div className={styles.ringCenter}>
-                      <span className={styles.ringCalories}>{Math.round(summary.totalCalories)}</span>
-                      <p className={styles.ringGoal}>/ {Math.round(summary.calorieGoal)} kcal</p>
+                    <div className="absolute text-center">
+                      <span className="text-3xl font-extrabold text-[#0f172a] tracking-tight">{Math.round(summary.totalCalories)}</span>
+                      <p className="text-[10px] uppercase font-bold text-slate-400 mt-0.5">/ {Math.round(summary.calorieGoal)} kcal</p>
                     </div>
                   </div>
                 </div>
 
-                <div className={styles.statsGrid}>
+                <div className="border-t border-slate-100 pt-6 grid grid-cols-2 gap-4 text-center">
                   <div>
-                    <span className={styles.statLabel}>Goal Limit</span>
-                    <p className={styles.statValue}>{Math.round(summary.calorieGoal)} kcal</p>
+                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Goal Limit</span>
+                    <p className="text-xl font-extrabold text-[#0f172a] mt-1">{Math.round(summary.calorieGoal)} kcal</p>
                   </div>
                   <div>
-                    <span className={styles.statLabel}>Remaining</span>
-                    <p className={`${styles.statRemaining} ${summary.remaining > 0 ? styles.textBlue : styles.textRed}`}>
+                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Remaining</span>
+                    <p className={`text-xl font-extrabold mt-1 ${summary.remaining > 0 ? "text-blue-600" : "text-red-500"}`}>
                       {Math.round(summary.remaining)} kcal
                     </p>
                   </div>
@@ -623,42 +622,42 @@ export default function FoodLogPage() {
             </Card>
 
             {/* Macro Splits Card */}
-            <Card className={styles.macrosCard}>
+            <Card className="bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
               <CardHeader>
-                <CardTitle className={styles.cardTitle}>Daily Macro Splits</CardTitle>
-                <CardDescription className={styles.cardDescription}>Track distribution of macronutrients.</CardDescription>
+                <CardTitle className="text-lg font-bold">Daily Macro Splits</CardTitle>
+                <CardDescription>Track distribution of macronutrients.</CardDescription>
               </CardHeader>
-              <CardContent className={styles.macrosContent}>
+              <CardContent className="space-y-4 pt-2">
                 {/* Protein Bar */}
-                <div className={styles.macroItem}>
-                  <div className={styles.macroLabelRow}>
-                    <span className={styles.macroLabel}>Protein</span>
-                    <span className={styles.macroValue}>{Math.round(summary.totalProtein)}g ({Math.round(pPct)}%)</span>
+                <div>
+                  <div className="flex justify-between text-xs font-semibold mb-1">
+                    <span className="text-slate-500">Protein</span>
+                    <span className="text-[#0f172a]">{Math.round(summary.totalProtein)}g ({Math.round(pPct)}%)</span>
                   </div>
-                  <div className={styles.macroBarBg}>
-                    <div className={`${styles.macroBarFg} ${styles.bgProtein}`} style={{ width: `${pPct || 0}%` }}></div>
+                  <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-blue-500 rounded-full" style={{ width: `${pPct || 0}%` }}></div>
                   </div>
                 </div>
 
                 {/* Carbohydrates Bar */}
-                <div className={styles.macroItem}>
-                  <div className={styles.macroLabelRow}>
-                    <span className={styles.macroLabel}>Carbs</span>
-                    <span className={styles.macroValue}>{Math.round(summary.totalCarbs)}g ({Math.round(cPct)}%)</span>
+                <div>
+                  <div className="flex justify-between text-xs font-semibold mb-1">
+                    <span className="text-slate-500">Carbs</span>
+                    <span className="text-[#0f172a]">{Math.round(summary.totalCarbs)}g ({Math.round(cPct)}%)</span>
                   </div>
-                  <div className={styles.macroBarBg}>
-                    <div className={`${styles.macroBarFg} ${styles.bgCarbs}`} style={{ width: `${cPct || 0}%` }}></div>
+                  <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-amber-500 rounded-full" style={{ width: `${cPct || 0}%` }}></div>
                   </div>
                 </div>
 
                 {/* Fats Bar */}
-                <div className={styles.macroItem}>
-                  <div className={styles.macroLabelRow}>
-                    <span className={styles.macroLabel}>Fats</span>
-                    <span className={styles.macroValue}>{Math.round(summary.totalFat)}g ({Math.round(fPct)}%)</span>
+                <div>
+                  <div className="flex justify-between text-xs font-semibold mb-1">
+                    <span className="text-slate-500">Fats</span>
+                    <span className="text-[#0f172a]">{Math.round(summary.totalFat)}g ({Math.round(fPct)}%)</span>
                   </div>
-                  <div className={styles.macroBarBg}>
-                    <div className={`${styles.macroBarFg} ${styles.bgFat}`} style={{ width: `${fPct || 0}%` }}></div>
+                  <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-rose-500 rounded-full" style={{ width: `${fPct || 0}%` }}></div>
                   </div>
                 </div>
               </CardContent>
