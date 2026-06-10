@@ -12,8 +12,6 @@ interface QrScannerConfig {
   verbose?: boolean;
 }
 
-
-
 export default function QRScanner({
   onScanSuccess,
 }: {
